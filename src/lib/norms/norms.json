@@ -1,26 +1,30 @@
 {
   "schema": 1,
-  "policy": "Only published, public norms that apply to the exact administration may be entered here, with a full citation. Never estimate or invent values. Process metrics are exploratory and never normed.",
+  "policy": "Only published, public norms that apply to the exact administration may be entered here, with a full citation. Never estimate or invent values. Process metrics are exploratory and never normed. Clinical-group references (groups.adhd, groups.autism) follow the same policy and are chart overlays only: they never produce z-scores or flags.",
   "tasks": {
     "trail-making": {
       "status": "placeholder",
       "note": "No published norms apply to this digital administration (15 circles per part, fixed alternate layouts, finger/mouse input). Published child norms exist for the paper Trail Making Test, but a different item count, layout and input device make them inapplicable. Placeholder — add age-band values and citation once validated for this version.",
-      "metrics": {}
+      "metrics": {},
+      "groups": { "adhd": {}, "autism": {} }
     },
     "go-no-go": {
       "status": "placeholder",
       "note": "No published norms apply to this Go/No-Go protocol (40 trials, 25% no-go, 500 ms stimulus, 1000–1500 ms ISI). Placeholder.",
-      "metrics": {}
+      "metrics": {},
+      "groups": { "adhd": {}, "autism": {} }
     },
     "flanker": {
       "status": "placeholder",
       "note": "No published norms apply to this Flanker protocol (32 trials, fish stimuli, 3 s limit). Published norms for other flanker implementations are not transferable. Placeholder.",
-      "metrics": {}
+      "metrics": {},
+      "groups": { "adhd": {}, "autism": {} }
     },
     "spatial-span": {
       "status": "placeholder",
       "note": "No published norms apply to this digital Corsi-style administration (on-screen 9-tile layout, 700/300 ms timing, touch input). Norms for the physical block-tapping board are not transferable. Placeholder.",
-      "metrics": {}
+      "metrics": {},
+      "groups": { "adhd": {}, "autism": {} }
     }
   }
 }

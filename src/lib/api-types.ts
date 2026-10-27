@@ -26,6 +26,9 @@ export type SessionDTO = {
   results: ResultDTO[];
 };
 
+/** One score metric across other patients' standard sessions (GET /api/patients/:id/cohort, keyed "taskType:metricKey"). */
+export type CohortStatDTO = { q1: number; median: number; q3: number; sessions: number; kids: number; sampleKids: number; ageMin: number; ageMax: number };
+
 export type PatientDTO = {
   id: string;
   code: string;

@@ -13,7 +13,15 @@ export const FLAG_SD = 1.5;
 
 export type NormBand = { ageMin: number; ageMax: number; mean: number; sd: number; n: number };
 export type PublishedNorm = { citation: string; administration: string; bands: NormBand[] };
-export type TaskNorms = { status: "placeholder" | "published"; note: string; metrics: Record<string, PublishedNorm> };
+export const REFERENCE_GROUPS = ["typical", "adhd", "autism"] as const;
+export type ReferenceGroup = (typeof REFERENCE_GROUPS)[number];
+export type TaskNorms = {
+  status: "placeholder" | "published";
+  note: string;
+  metrics: Record<string, PublishedNorm>;
+  /** Published clinical-group references, same citation policy. Display only — never used for z-scores or flags. */
+  groups?: Partial<Record<Exclude<ReferenceGroup, "typical">, Record<string, PublishedNorm>>>;
+};
 export type NormsFile = { schema: number; policy: string; tasks: Record<string, TaskNorms> };
 
 export type NormComparison =
@@ -49,6 +57,18 @@ export function compareMetric(taskType: TaskType, metric: Metric, age: number, n
     citation: entry.citation,
     band,
   };
+}
+
+export type ReferenceRange = { status: "available"; band: NormBand; citation: string } | { status: "unavailable"; note: string };
+
+/** Published reference band at the child's age for chart overlays. "typical" is the task's published norm. */
+export function referenceRange(taskType: TaskType, metricKey: string, group: ReferenceGroup, age: number, norms: NormsFile = NORMS): ReferenceRange {
+  const task = norms.tasks[taskType];
+  const entry = group === "typical" ? task?.metrics[metricKey] : task?.groups?.[group]?.[metricKey];
+  if (!entry) return { status: "unavailable", note: "No published data for this task yet." };
+  const band = entry.bands.find((b) => age >= b.ageMin && age <= b.ageMax);
+  if (!band) return { status: "unavailable", note: `No published band for age ${age}.` };
+  return { status: "available", band, citation: entry.citation };
 }
 
 export function compareToNorms(taskType: TaskType, metrics: Metric[], age: number, norms: NormsFile = NORMS): Record<string, NormComparison> {

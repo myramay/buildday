@@ -15,6 +15,15 @@ export function round(v: number | null | undefined, digits = 0): number | null {
   return Math.round(v * f) / f;
 }
 
+/** Linear-interpolated quantile (p in 0–1) of unsorted values. */
+export function quantile(xs: number[], p: number): number | null {
+  if (!xs.length) return null;
+  const s = [...xs].sort((a, b) => a - b);
+  const i = (s.length - 1) * p;
+  const lo = Math.floor(i);
+  return s[lo] + (s[Math.ceil(i)] - s[lo]) * (i - lo);
+}
+
 /** Mean of the first and last thirds of an ordered series. Needs ≥ 6 values. */
 export function thirds(xs: number[]): { first: number; last: number } | null {
   if (xs.length < 6) return null;
