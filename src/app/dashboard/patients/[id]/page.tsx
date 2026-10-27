@@ -1,10 +1,11 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Download, Info, Zap } from "lucide-react";
 import { HesitationMap, SegmentChart, ThirdsChart, TrendChart, TrialChart, type TrendBand, type TrendPoint } from "@/components/dashboard/charts";
+import { HesitationList } from "@/components/dashboard/hesitation-list";
 import { SampleBadge } from "@/components/dashboard/sample-badge";
 import { ScoreTable, ValidityChips, formatValue } from "@/components/dashboard/score-table";
 import { TrailReplay } from "@/components/dashboard/trail-replay";
@@ -158,9 +159,20 @@ function MissingTask({ label }: { label: string }) {
   return <div className="rounded-2xl border border-dashed px-5 py-4 text-sm text-muted-foreground">{label} — no result for this session.</div>;
 }
 
+/** Score-table rows that open the task's hesitation list. */
+const HESITATION_KEYS = ["hesitations", "hesitationMs", "letterHesitationRatio"];
+
 function TaskCard({ result, sessionId }: { result: ResultDTO; sessionId: string }) {
   const m = result.metrics;
   const circles = useCircles(result);
+  const hesitations = m.charts.hesitations ?? [];
+  const [selectedHes, setSelectedHes] = useState<number | null>(null);
+  const hesRef = useRef<HTMLDivElement>(null);
+  // Trail Making's list lives in the replay (selecting jumps the replay); span gets its own list.
+  const hasHesList = result.taskType === "trail-making" || result.taskType === "spatial-span";
+  const showHes = () => hesRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const links = hasHesList ? Object.fromEntries(m.metrics.filter((x) => HESITATION_KEYS.includes(x.key)).map((x) => [x.key, showHes])) : {};
+  const highlight = selectedHes != null ? hesitations[selectedHes]?.trial : undefined;
   return (
     <article className="flex flex-col gap-4 rounded-2xl border bg-card p-5 md:p-6" data-testid={`task-${result.taskType}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -176,7 +188,7 @@ function TaskCard({ result, sessionId }: { result: ResultDTO; sessionId: string 
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <ScoreTable result={result} />
+        <ScoreTable result={result} links={links} />
         <div className="grid content-start gap-3 sm:grid-cols-2">
           {result.taskType === "trail-making" ? (
             <>
@@ -188,7 +200,11 @@ function TaskCard({ result, sessionId }: { result: ResultDTO; sessionId: string 
           ) : (
             <>
               <div className="sm:col-span-2">
-                <TrialChart trials={m.charts.trials ?? []} title={result.taskType === "spatial-span" ? "Response duration per sequence" : "Response time per trial"} />
+                <TrialChart
+                  trials={m.charts.trials ?? []}
+                  title={result.taskType === "spatial-span" ? "Response duration per sequence" : "Response time per trial"}
+                  highlight={highlight}
+                />
               </div>
               {m.charts.thirds?.length ? <ThirdsChart thirds={m.charts.thirds} unitLabel={m.charts.thirds[0].label} /> : null}
             </>
@@ -197,9 +213,15 @@ function TaskCard({ result, sessionId }: { result: ResultDTO; sessionId: string 
       </div>
 
       {result.taskType === "trail-making" && (
-        <div>
+        <div ref={hesRef} className="scroll-mt-4">
           <h4 className="mb-2 text-sm font-semibold">Path replay · hesitations highlighted</h4>
           <TrailReplay sessionId={sessionId} />
+        </div>
+      )}
+      {result.taskType === "spatial-span" && (
+        <div ref={hesRef} className="max-w-md scroll-mt-4">
+          <h4 className="mb-2 text-sm font-semibold">Pauses between taps · click to mark the sequence on the chart</h4>
+          <HesitationList hesitations={hesitations} selected={selectedHes} onSelect={(i) => setSelectedHes(i === selectedHes ? null : i)} />
         </div>
       )}
     </article>

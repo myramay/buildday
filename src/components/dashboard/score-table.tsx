@@ -68,16 +68,28 @@ function NormCell({ n }: { n: NormComparison | undefined }) {
   }
 }
 
-/** Score table for one task result. Flags (red) appear only where a published norm comparison exceeds 1.5 SD. */
-export function ScoreTable({ result }: { result: ResultDTO }) {
+/**
+ * Score table for one task result. Flags (red) appear only where a published norm comparison exceeds 1.5 SD.
+ * Metrics listed in `links` render as buttons (e.g. hesitation counts → the hesitation list).
+ */
+export function ScoreTable({ result, links = {} }: { result: ResultDTO; links?: Record<string, () => void> }) {
   const scores = result.metrics.metrics.filter((m) => m.kind === "score");
   const process = result.metrics.metrics.filter((m) => m.kind === "process");
   const row = (m: Metric) => {
     const n = result.normComparison[m.key];
     const flagged = n?.status === "compared" && n.flag;
+    const link = links[m.key];
     return (
       <tr key={m.key} className={cn("border-t", flagged && "bg-status-serious/8")}>
-        <td className="py-1.5 pr-3">{m.label}</td>
+        <td className="py-1.5 pr-3">
+          {link ? (
+            <button type="button" onClick={link} className="text-left text-primary underline decoration-dotted underline-offset-2 hover:decoration-solid">
+              {m.label}
+            </button>
+          ) : (
+            m.label
+          )}
+        </td>
         <td className="whitespace-nowrap py-1.5 pr-4 text-right font-medium tabular-nums" title={m.value == null ? m.na : undefined}>
           {formatValue(m)}
         </td>
