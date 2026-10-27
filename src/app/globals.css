@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: var(--font-inter);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-status-good: var(--status-good);
+  --color-status-warn: var(--status-warn);
+  --color-status-serious: var(--status-serious);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(0.986 0.003 95);
+  --foreground: oklch(0.22 0.015 220);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.015 220);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.015 220);
+  /* Deep teal — the one accent. */
+  --primary: oklch(0.44 0.075 196);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.012 196);
+  --secondary-foreground: oklch(0.32 0.06 196);
+  --muted: oklch(0.965 0.004 95);
+  --muted-foreground: oklch(0.52 0.012 220);
+  --accent: oklch(0.955 0.018 196);
+  --accent-foreground: oklch(0.32 0.06 196);
+  --destructive: oklch(0.577 0.2 27);
+  --border: oklch(0.915 0.006 95);
+  --input: oklch(0.89 0.008 95);
+  --ring: oklch(0.6 0.07 196);
+  --radius: 0.75rem;
+
+  --status-good: oklch(0.56 0.1 160);
+  --status-warn: oklch(0.7 0.13 75);
+  --status-serious: oklch(0.6 0.16 35);
+
+  /* Kid surfaces: soft, warm, simple. */
+  --kid-bg: oklch(0.975 0.012 85);
+  --kid-ink: oklch(0.32 0.025 230);
+  --kid-sky: oklch(0.88 0.06 230);
+  --kid-butter: oklch(0.93 0.09 92);
+  --kid-mint: oklch(0.9 0.06 165);
+  --kid-peach: oklch(0.88 0.07 50);
+  --kid-rose: oklch(0.87 0.06 5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    @apply font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+}
+
+/* ---------- Kid-facing motion ---------- */
+
+@keyframes kid-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.kid-pop { animation: kid-pop 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+
+.kid-press {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 90ms ease, box-shadow 90ms ease;
+}
+.kid-press:active {
+  transform: translateY(3px) scale(0.98);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
+}
+
+@keyframes kid-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.kid-float { animation: kid-float 3.2s ease-in-out infinite; }
+
+/* Instruction demo: a pointer "finger" taps the matching card on a loop. */
+@keyframes demo-finger {
+  0%, 15% { transform: translate(-120%, 60%); opacity: 0; }
+  30% { opacity: 1; }
+  55% { transform: translate(0, 0); }
+  62% { transform: translate(0, 6px) scale(0.92); }
+  70% { transform: translate(0, 0); }
+  90%, 100% { transform: translate(0, 0); opacity: 0; }
+}
+@keyframes demo-glow {
+  0%, 58% { box-shadow: 0 0 0 0 transparent; }
+  64% { box-shadow: 0 0 0 8px var(--kid-mint); }
+  90%, 100% { box-shadow: 0 0 0 0 transparent; }
+}
+@keyframes demo-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.demo-finger { animation: demo-finger 2.6s ease-in-out infinite; }
+.demo-glow { animation: demo-glow 2.6s ease-in-out infinite; }
+.demo-pulse { animation: demo-pulse 2.6s ease-in-out infinite; }
+
+/* Trail demo: the line draws itself 1 → 4, holds, repeats. */
+@keyframes demo-trail {
+  0% { stroke-dashoffset: 1; }
+  70%, 100% { stroke-dashoffset: 0; }
+}
+.demo-trail { stroke-dasharray: 1; animation: demo-trail 2.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kid-pop, .kid-float, .demo-finger, .demo-glow, .demo-pulse, .demo-trail { animation: none; }
+}

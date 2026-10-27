@@ -1,0 +1,85 @@
+// Seen data model. SQLite for local/demo use; no external services.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Clinician {
+  id       String    @id @default(cuid())
+  name     String
+  sessions Session[]
+}
+
+/// Pseudonymous: no names or other direct identifiers are stored.
+model Patient {
+  id           String    @id @default(cuid())
+  code         String    @unique
+  age          Int
+  grade        String
+  dominantHand String // "left" | "right" | "unknown"
+  /// Fictional sample data created by the seed script.
+  isSample     Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+}
+
+model Session {
+  id          String       @id @default(cuid())
+  patientId   String
+  patient     Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  clinicianId String
+  clinician   Clinician    @relation(fields: [clinicianId], references: [id])
+  /// "standard" | "quick" (shortened demo administration — not comparable to standard).
+  protocol    String       @default("standard")
+  startedAt   DateTime     @default(now())
+  completedAt DateTime?
+  /// JSON: { userAgent, platform, devicePixelRatio, maxTouchPoints }
+  deviceInfo  String
+  screenWidth  Int
+  screenHeight Int
+  /// "touch" | "mouse" | "pen" | "unknown"
+  inputType   String
+  results     TaskResult[]
+  events      RawEventLog[]
+
+  @@index([patientId, startedAt])
+}
+
+model TaskResult {
+  id             String   @id @default(cuid())
+  sessionId      String
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  /// "trail-making" | "go-no-go" | "flanker" | "spatial-span"
+  taskType       String
+  /// Version of lib/metrics that computed `metrics` (so results can be recomputed/compared).
+  version        String
+  /// JSON: computed metrics (see lib/metrics)
+  metrics        String
+  /// JSON: per-metric norm comparison (see lib/norms)
+  normComparison String
+  createdAt      DateTime @default(now())
+
+  @@unique([sessionId, taskType])
+}
+
+/// Full raw event stream for one task phase, gzip-compressed JSON (RawEvent[]).
+model RawEventLog {
+  id         String   @id @default(cuid())
+  sessionId  String
+  session    Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  taskType   String
+  /// "practice" | "test"
+  phase      String
+  /// Task protocol version the events were recorded with.
+  taskVersion String
+  eventCount Int
+  data       Bytes
+  createdAt  DateTime @default(now())
+
+  @@unique([sessionId, taskType, phase])
+}
