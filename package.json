@@ -10,6 +10,7 @@
     "test": "vitest run",
     "db:setup": "prisma db push && prisma db seed",
     "db:rescore": "tsx prisma/rescore.ts",
+    "demo:references": "tsx prisma/demo-references.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
