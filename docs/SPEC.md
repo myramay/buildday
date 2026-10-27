@@ -2,7 +2,7 @@
 
 Version 0.1 · Metrics v1.0.0 · Task protocols `tmt-1`, `gng-1`, `flanker-1`, `span-1`
 
-> Sections 1–15 describe what is built. §16 lists v0.2 changes that are decided but **not yet implemented**; where they conflict, §16 is the target.
+> Sections 1–15 describe v0.1. §16 lists v0.2 changes; its status table says which are built (metrics v1.1.0). Where they conflict, §16 is the target.
 
 ## 1. Purpose
 
@@ -250,15 +250,20 @@ Client upload path: after each round the runner queues `events` (practice and te
 - **Normality.** Percentile = Φ(z) assumes normal data; completion times and RTs are right-skewed. Any norms added must state whether they are on raw, log-transformed or empirical-percentile scales, and the comparison must follow that.
 - **Absolute timing.** The rAF timestamp marks the start of the frame, not when it reaches the display, and touchscreen input latency varies by device by tens of ms. Scripted Chromium tests cannot measure either. Within-device trends are sound; cross-device comparison and any future norms carry this offset.
 
-## 16. v0.2 changes (decided, not yet implemented)
+## 16. v0.2 changes
+
+| Status | Items |
+|---|---|
+| **Built** (metrics v1.1.0) | Early/extra input logged and flagged · `visibility_*` events and `interrupted` flag · per-press `input_device` pointerType and `mouse_input` from it · `npm run db:rescore` (overwrites in place) · all of §16.3 except the Trail Making error/lift rules and board shape · `letterHesitationRatio` (not yet age-gated) |
+| **Not built** | Age per session and 409 on conflicting patient fields · versioned `TaskResult` history · patient PATCH/DELETE · key auto-repeat logging · Trail Making times excluding paused time · everything else in §16.2 (script, practice criterion, skip/abort, Part B age gate) · Trail Making error/lift rules (not yet checked against the task code) |
 
 ### 16.1 Data integrity
 
 - **Age per session.** `Session` gains `ageYears`, `ageMonths` and `grade`, recorded at administration; norm comparison uses session age. `Patient` keeps `code`, `dominantHand`, `isSample`. `POST /api/sessions` with an existing code whose submitted fields conflict returns **409** with the stored patient; the setup screen asks the clinician to confirm before continuing.
 - **Log all input.** Nothing is dropped at capture. Input before onset is logged as `response` / `tap` with `d.early = true`; Go/No-Go responses after the first with `d.extra = true`; key auto-repeat with `d.repeat = true`. Metrics skip flagged events unless a metric names them. New process metric `earlyResponses` (Go/No-Go, Flanker, span).
 - **Interruptions.** New events `visibility_hidden` / `visibility_visible` {pausedMs}. New validity flag `interrupted` (any hidden period). Trail Making times exclude paused time; the flag is still raised.
-- **Re-scoring.** `npm run rescore` recomputes `TaskResult`s from stored events with the current `METRICS_VERSION`. `TaskResult` becomes unique on (sessionId, taskType, version); the dashboard shows the newest version and older ones are kept.
-- **Per-response input type.** Every Go/No-Go, Flanker and span response records `pointerType`; `mouse_input` uses it instead of the session-level `(pointer: coarse)` inference.
+- **Re-scoring.** `npm run db:rescore` recomputes `TaskResult`s from stored events with the current `METRICS_VERSION`. `TaskResult` becomes unique on (sessionId, taskType, version); the dashboard shows the newest version and older ones are kept.
+- **Per-response input type.** Every press during a task is logged as `input_device` {pointerType}; `mouse_input` uses these (and Trail Making's `pointer_down`) instead of the session-level `(pointer: coarse)` inference.
 - **Patient management.** `PATCH /api/patients/:id` (dominantHand); `DELETE /api/patients/:id` removes the patient and all sessions, results and event logs.
 
 ### 16.2 Administration with children
