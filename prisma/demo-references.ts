@@ -48,14 +48,14 @@ const base = (age: number): Params => ({ trail: trailSimBase(age), gng: gngSimBa
 const GROUPS: Record<ReferenceGroup, (p: Params) => Params> = {
   typical: (p) => p,
   adhd: (p) => ({
-    trail: { ...p.trail, speedB: p.trail.speedB * 0.9, pauseA: p.trail.pauseA * 1.4, pauseB: p.trail.pauseB * 1.5, errorA: p.trail.errorA * 2, errorB: p.trail.errorB * 1.8, fatigue: p.trail.fatigue + 0.12 },
-    gng: { ...p.gng, rtMean: p.gng.rtMean + 25, rtSdFrac: 0.32, omission: 0.06, commission: p.gng.commission * 1.7 },
-    flanker: { ...p.flanker, effect: p.flanker.effect + 35, sdFrac: 0.26, accC: p.flanker.accC - 0.03, accI: p.flanker.accI - 0.07, omission: 0.03 },
-    span: { ...p.span, capacity: p.span.capacity - 0.5 },
+    trail: { ...p.trail, speedB: p.trail.speedB * 0.95, pauseA: p.trail.pauseA * 1.2, pauseB: p.trail.pauseB * 1.25, errorA: p.trail.errorA * 1.5, errorB: p.trail.errorB * 1.4, fatigue: p.trail.fatigue + 0.06 },
+    gng: { ...p.gng, rtMean: p.gng.rtMean + 20, rtSdFrac: 0.24, omission: 0.04, commission: p.gng.commission * 1.25 },
+    flanker: { ...p.flanker, effect: p.flanker.effect + 30, sdFrac: 0.24, accC: p.flanker.accC - 0.02, accI: p.flanker.accI - 0.05, omission: 0.02 },
+    span: { ...p.span, capacity: p.span.capacity - 0.3 },
   }),
   autism: (p) => ({
-    trail: { ...p.trail, speedA: p.trail.speedA * 0.92, speedB: p.trail.speedB * 0.85, pauseB: p.trail.pauseB * 1.3, letterPause: p.trail.letterPause * 1.6, errorB: p.trail.errorB * 1.3 },
-    gng: { ...p.gng, rtMean: p.gng.rtMean + 50, rtSdFrac: 0.26, commission: p.gng.commission * 1.2 },
+    trail: { ...p.trail, speedA: p.trail.speedA * 0.96, speedB: p.trail.speedB * 0.93, pauseB: p.trail.pauseB * 1.15, letterPause: p.trail.letterPause * 1.3, errorB: p.trail.errorB * 1.15 },
+    gng: { ...p.gng, rtMean: p.gng.rtMean + 35, rtSdFrac: 0.22, commission: p.gng.commission * 1.1 },
     flanker: { ...p.flanker, congRt: p.flanker.congRt + 60, effect: p.flanker.effect + 15, accI: p.flanker.accI - 0.03 },
     span: { ...p.span, capacity: p.span.capacity - 0.2 },
   }),

@@ -101,6 +101,8 @@ dashboard ◀── GET /api/patients[/:id], /api/sessions/:id[/events|/export]
 
 `npm run db:setup` creates 3 fictional patients (`SAMPLE-A01/B02/C03`, flagged `isSample`, labeled "SAMPLE DATA" in the UI) with 3–4 sessions each: one improving over time, one stable with frequent errors, one including a mouse-input session with a long pause (validity flags).
 
+**Fictional reference ranges.** The patient page's session-over-session chart can overlay Typical / ADHD / Autism ranges. No published references exist for these tasks yet, so the overlays fall back to **fictional demo data**: simulated children with made-up group differences (`src/lib/norms/demo-references.json`, regenerate with `npm run demo:references`). They are labelled "fictional" in the UI, are overlays only (never z-scores or flags), and are hidden by setting `DEMO_REFERENCES_ENABLED = false` in `src/lib/norms/demo.ts`. Published references entered in `norms.json` always take precedence.
+
 ## Testing
 
 - `npm test` — unit tests for `lib/metrics` (Trail Making timing, hesitations, path efficiency, validity flags, alternate-form layouts; Go/No-Go, Flanker, span scoring) and `lib/norms` (placeholder policy; z/percentile/flag math against a marked test fixture).

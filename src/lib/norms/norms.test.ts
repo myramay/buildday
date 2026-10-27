@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { Metric } from "@/lib/metrics/types";
 import { compareMetric, NORMS, referenceRange, type NormsFile } from "@/lib/norms";
+import { demoReferenceBand } from "@/lib/norms/demo";
+import DEMO from "@/lib/norms/demo-references.json";
 
 const score = (value: number, worse: Metric["worse"] = "higher"): Metric => ({ key: "timeA", label: "Part A time", value, unit: "ms", kind: "score", worse });
 
@@ -34,6 +36,13 @@ describe("norms", () => {
     expect(referenceRange("trail-making", "timeA", "adhd", 9, FIXTURE)).toMatchObject({ status: "available", band: { mean: 26000, sd: 7000 } });
     expect(referenceRange("trail-making", "timeA", "adhd", 12, FIXTURE).status).toBe("unavailable");
     expect(referenceRange("trail-making", "timeA", "autism", 9, FIXTURE).status).toBe("unavailable");
+  });
+
+  it("fictional demo ranges are flagged and never feed z-scores or flags", () => {
+    expect(DEMO.fictional).toBe(true);
+    expect(demoReferenceBand("trail-making", "timeB", "adhd", 9)).toMatchObject({ ageMin: 9, ageMax: 10 });
+    expect(referenceRange("trail-making", "timeB", "adhd", 9).status).toBe("unavailable");
+    expect(compareMetric("trail-making", score(30000), 9).status).toBe("placeholder");
   });
 
   it("process metrics are always exploratory", () => {

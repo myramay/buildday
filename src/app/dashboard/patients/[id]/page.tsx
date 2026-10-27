@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { CohortStatDTO, PatientDTO, ResultDTO, SessionDTO } from "@/lib/api-types";
 import { TASK_LABELS, TASK_TYPES } from "@/lib/events";
 import { referenceRange, type ReferenceGroup } from "@/lib/norms";
+import { demoReferenceBand } from "@/lib/norms/demo";
 import { trailLayout, type TrailCircle } from "@/lib/tasks/protocol";
 import { cn } from "@/lib/utils";
 
@@ -261,7 +262,7 @@ function overlayRange(
   opt: MetricOption,
   age: number,
   cohort: { data: Record<string, CohortStatDTO> | null; error: string | null },
-): { range?: { low: number; high: number; mid: number }; detail: string } {
+): { range?: { low: number; high: number; mid: number }; detail: string; fictional?: boolean } {
   if (id === "cohort") {
     if (cohort.error) return { detail: "Couldn't load other kids' scores." };
     if (!cohort.data) return { detail: "Loading…" };
@@ -274,9 +275,18 @@ function overlayRange(
     };
   }
   const r = referenceRange(opt.task, opt.key, id, age);
-  if (r.status === "unavailable") return { detail: r.note };
-  const { mean, sd, ageMin, ageMax, n } = r.band;
-  return { range: { low: mean - sd, high: mean + sd, mid: mean }, detail: `mean ± 1 SD, ages ${ageMin}–${ageMax}, n = ${n} · ${r.citation}` };
+  if (r.status === "available") {
+    const { mean, sd, ageMin, ageMax, n } = r.band;
+    return { range: { low: mean - sd, high: mean + sd, mid: mean }, detail: `mean ± 1 SD, ages ${ageMin}–${ageMax}, n = ${n} · ${r.citation}` };
+  }
+  // No published reference: fall back to the fictional demo ranges (labelled as such everywhere).
+  const demo = demoReferenceBand(opt.task, opt.key, id, age);
+  if (!demo) return { detail: r.note };
+  return {
+    range: { low: demo.mean - demo.sd, high: demo.mean + demo.sd, mid: demo.mean },
+    fictional: true,
+    detail: `FICTIONAL demo data: mean ± 1 SD of ${demo.n} simulated kids aged ${demo.ageMin}–${demo.ageMax}, not real children`,
+  };
 }
 
 function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patientId: string; age: number }) {
@@ -304,7 +314,7 @@ function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patie
   const versions = [...new Set(sessions.flatMap((s) => s.results.filter((r) => r.taskType === opt.task).map((r) => r.version)))];
   const overlays = OVERLAYS.map((o) => ({ ...o, ...overlayRange(o.id, opt, age, cohort) }));
   const visible = overlays.filter((o) => o.range && shown.has(o.id));
-  const bands: TrendBand[] = visible.map((o) => ({ id: o.id, label: o.label, color: o.color, ...o.range! }));
+  const bands: TrendBand[] = visible.map((o) => ({ id: o.id, label: o.fictional ? `${o.label} (fictional)` : o.label, color: o.color, ...o.range! }));
   const toggle = (id: OverlayId, on: boolean) =>
     setShown((s) => {
       const next = new Set(s);
@@ -338,6 +348,7 @@ function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patie
             <span aria-hidden className="w-4 border-t-2 border-dashed" style={{ borderColor: o.color }} />
             {o.label}
             {!o.range && <span className="text-xs">(no data)</span>}
+            {o.fictional && <span className="rounded bg-status-warn/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">fictional</span>}
           </label>
         ))}
       </div>
@@ -362,8 +373,8 @@ function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patie
         </ul>
       )}
       <p className="mt-2 text-xs text-muted-foreground">
-        Typical / ADHD / Autism use only cited, published references for this exact task (norms.json). Group ranges overlap heavily, so a score inside a
-        group&apos;s range is not evidence of a diagnosis.
+        Typical / ADHD / Autism use cited, published references for this exact task (norms.json) when they exist; ranges marked fictional are simulated
+        demo data, not real children. Group ranges overlap heavily, so a score inside a group&apos;s range is not evidence of a diagnosis.
       </p>
     </section>
   );
