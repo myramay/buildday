@@ -1,0 +1,2466 @@
+{
+ "fictional": true,
+ "note": "FICTIONAL DEMO DATA. Simulated children with made-up group differences — not real typical, ADHD or autism data. Chart overlays only; never used for z-scores or flags. Regenerate with `npm run demo:references`.",
+ "groups": {
+  "typical": {
+   "trail-making": {
+    "timeA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 23966.62,
+      "sd": 3206.344,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 20779.38,
+      "sd": 2435.965,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 18823.627,
+      "sd": 2527.485,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 16442.376,
+      "sd": 1799.728,
+      "n": 90
+     }
+    ],
+    "timeB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 31895.89,
+      "sd": 5276.516,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 27609.672,
+      "sd": 4843.525,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 24214.132,
+      "sd": 4377.778,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 20918.272,
+      "sd": 3166.902,
+      "n": 90
+     }
+    ],
+    "errorsA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.15,
+      "sd": 0.36,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.133,
+      "sd": 0.389,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.15,
+      "sd": 0.36,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.089,
+      "sd": 0.286,
+      "n": 90
+     }
+    ],
+    "errorsB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.817,
+      "sd": 0.854,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.633,
+      "sd": 0.802,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.567,
+      "sd": 0.722,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.533,
+      "sd": 0.706,
+      "n": 90
+     }
+    ],
+    "diffBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 7929.3,
+      "sd": 5969.93,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 6830.367,
+      "sd": 5042.074,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 5390.517,
+      "sd": 4689.132,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 4475.9,
+      "sd": 3428.879,
+      "n": 90
+     }
+    ],
+    "ratioBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1.35,
+      "sd": 0.272,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.341,
+      "sd": 0.256,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 1.305,
+      "sd": 0.27,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.284,
+      "sd": 0.225,
+      "n": 90
+     }
+    ]
+   },
+   "go-no-go": {
+    "hits": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 29.4,
+      "sd": 0.764,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 29.45,
+      "sd": 0.746,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 29.433,
+      "sd": 0.722,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 29.467,
+      "sd": 0.864,
+      "n": 90
+     }
+    ],
+    "goTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 30,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "omissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.6,
+      "sd": 0.764,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.55,
+      "sd": 0.746,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.567,
+      "sd": 0.722,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.533,
+      "sd": 0.864,
+      "n": 90
+     }
+    ],
+    "commissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 2.7,
+      "sd": 1.369,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2,
+      "sd": 1.605,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 1.583,
+      "sd": 1.266,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.289,
+      "sd": 1.183,
+      "n": 90
+     }
+    ],
+    "nogoTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "meanRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 549.333,
+      "sd": 61.389,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 523.383,
+      "sd": 66.204,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 477.85,
+      "sd": 63.1,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 430.556,
+      "sd": 51.714,
+      "n": 90
+     }
+    ],
+    "sdRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 110.767,
+      "sd": 24.499,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 99.25,
+      "sd": 22.827,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 93.567,
+      "sd": 18.068,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 84.111,
+      "sd": 18.395,
+      "n": 90
+     }
+    ],
+    "anticipations": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "slowResponses": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ]
+   },
+   "flanker": {
+    "accuracy": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.898,
+      "sd": 0.095,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.894,
+      "sd": 0.074,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.911,
+      "sd": 0.072,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.888,
+      "sd": 0.083,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.267,
+      "sd": 3.036,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 3.4,
+      "sd": 2.366,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.867,
+      "sd": 2.288,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 3.589,
+      "sd": 2.643,
+      "n": 90
+     }
+    ],
+    "noResponse": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.383,
+      "sd": 0.666,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.25,
+      "sd": 0.474,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.333,
+      "sd": 0.51,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.289,
+      "sd": 0.546,
+      "n": 90
+     }
+    ],
+    "accCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.907,
+      "sd": 0.135,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.904,
+      "sd": 0.101,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.915,
+      "sd": 0.107,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.91,
+      "sd": 0.109,
+      "n": 90
+     }
+    ],
+    "accIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.889,
+      "sd": 0.12,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.884,
+      "sd": 0.118,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.906,
+      "sd": 0.101,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.866,
+      "sd": 0.117,
+      "n": 90
+     }
+    ],
+    "rtCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 923.8,
+      "sd": 114.091,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 812.183,
+      "sd": 92.754,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 714.167,
+      "sd": 98.982,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 597.622,
+      "sd": 80.856,
+      "n": 90
+     }
+    ],
+    "rtIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1000.217,
+      "sd": 116.671,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 890.55,
+      "sd": 92.767,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 791.35,
+      "sd": 103.488,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 652.578,
+      "sd": 88.689,
+      "n": 90
+     }
+    ],
+    "flankerEffect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 76.417,
+      "sd": 63.47,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 78.367,
+      "sd": 64.055,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 77.183,
+      "sd": 48.826,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 54.956,
+      "sd": 43.975,
+      "n": 90
+     }
+    ]
+   },
+   "spatial-span": {
+    "maxSpan": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.6,
+      "sd": 0.669,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 4.217,
+      "sd": 0.804,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 4.9,
+      "sd": 0.858,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 5.433,
+      "sd": 0.925,
+      "n": 90
+     }
+    ],
+    "sequencesCorrect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 4.9,
+      "sd": 1.203,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 6.15,
+      "sd": 1.538,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 7.283,
+      "sd": 1.563,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 8.489,
+      "sd": 1.75,
+      "n": 90
+     }
+    ],
+    "sequences": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 7.383,
+      "sd": 1.497,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 8.683,
+      "sd": 1.855,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 9.667,
+      "sd": 1.782,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10.978,
+      "sd": 1.983,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 2.483,
+      "sd": 0.596,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2.533,
+      "sd": 0.623,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.383,
+      "sd": 0.555,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 2.489,
+      "sd": 0.658,
+      "n": 90
+     }
+    ]
+   }
+  },
+  "adhd": {
+   "trail-making": {
+    "timeA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 26952.005,
+      "sd": 3766.263,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 23177.503,
+      "sd": 2779.693,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 20571.863,
+      "sd": 3165.122,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 18252.946,
+      "sd": 2746.006,
+      "n": 90
+     }
+    ],
+    "timeB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 38557.532,
+      "sd": 7108.48,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 34005.525,
+      "sd": 5899.616,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 31373.312,
+      "sd": 5415.743,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 27424.243,
+      "sd": 5158.819,
+      "n": 90
+     }
+    ],
+    "errorsA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.333,
+      "sd": 0.51,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.2,
+      "sd": 0.403,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.25,
+      "sd": 0.437,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.267,
+      "sd": 0.493,
+      "n": 90
+     }
+    ],
+    "errorsB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.983,
+      "sd": 0.93,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.083,
+      "sd": 0.85,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 1.083,
+      "sd": 0.962,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.156,
+      "sd": 1.048,
+      "n": 90
+     }
+    ],
+    "diffBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 11605.533,
+      "sd": 7331.029,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 10828.05,
+      "sd": 7144.448,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 10801.483,
+      "sd": 6163.298,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 9171.367,
+      "sd": 5647.775,
+      "n": 90
+     }
+    ],
+    "ratioBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1.447,
+      "sd": 0.281,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.497,
+      "sd": 0.37,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 1.557,
+      "sd": 0.339,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.531,
+      "sd": 0.35,
+      "n": 90
+     }
+    ]
+   },
+   "go-no-go": {
+    "hits": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 28.2,
+      "sd": 1.424,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 28.083,
+      "sd": 1.369,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 27.983,
+      "sd": 1.61,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 28.322,
+      "sd": 1.288,
+      "n": 90
+     }
+    ],
+    "goTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 30,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "omissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1.8,
+      "sd": 1.424,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.917,
+      "sd": 1.369,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.017,
+      "sd": 1.61,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.678,
+      "sd": 1.288,
+      "n": 90
+     }
+    ],
+    "commissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 4.183,
+      "sd": 1.432,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 3.7,
+      "sd": 1.71,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.7,
+      "sd": 1.418,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.744,
+      "sd": 1.259,
+      "n": 90
+     }
+    ],
+    "nogoTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "meanRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 583.5,
+      "sd": 84.896,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 536.383,
+      "sd": 69.073,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 497.867,
+      "sd": 62.011,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 446.311,
+      "sd": 63.846,
+      "n": 90
+     }
+    ],
+    "sdRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 186.6,
+      "sd": 32.855,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 170.717,
+      "sd": 41.713,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 158.617,
+      "sd": 33.157,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 138.878,
+      "sd": 27.625,
+      "n": 90
+     }
+    ],
+    "anticipations": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "slowResponses": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ]
+   },
+   "flanker": {
+    "accuracy": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.844,
+      "sd": 0.086,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.844,
+      "sd": 0.084,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.866,
+      "sd": 0.07,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.855,
+      "sd": 0.087,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 5,
+      "sd": 2.762,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 4.983,
+      "sd": 2.671,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 4.283,
+      "sd": 2.233,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 4.633,
+      "sd": 2.79,
+      "n": 90
+     }
+    ],
+    "noResponse": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.933,
+      "sd": 0.936,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.2,
+      "sd": 1.162,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.933,
+      "sd": 0.954,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.022,
+      "sd": 1.081,
+      "n": 90
+     }
+    ],
+    "accCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.87,
+      "sd": 0.101,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.866,
+      "sd": 0.118,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.895,
+      "sd": 0.101,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.871,
+      "sd": 0.115,
+      "n": 90
+     }
+    ],
+    "accIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.818,
+      "sd": 0.128,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.823,
+      "sd": 0.135,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.838,
+      "sd": 0.125,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.84,
+      "sd": 0.128,
+      "n": 90
+     }
+    ],
+    "rtCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 958.35,
+      "sd": 136.187,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 828.9,
+      "sd": 120.169,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 716.867,
+      "sd": 113.775,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 612.622,
+      "sd": 86.8,
+      "n": 90
+     }
+    ],
+    "rtIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1072.183,
+      "sd": 117.308,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 942.817,
+      "sd": 120.723,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 821.667,
+      "sd": 118.549,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 700.211,
+      "sd": 96.958,
+      "n": 90
+     }
+    ],
+    "flankerEffect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 113.833,
+      "sd": 110.704,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 113.917,
+      "sd": 96.402,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 104.8,
+      "sd": 68.614,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 87.589,
+      "sd": 60.284,
+      "n": 90
+     }
+    ]
+   },
+   "spatial-span": {
+    "maxSpan": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.033,
+      "sd": 0.92,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 3.633,
+      "sd": 0.802,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 4.183,
+      "sd": 0.813,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 5.111,
+      "sd": 0.892,
+      "n": 90
+     }
+    ],
+    "sequencesCorrect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.717,
+      "sd": 1.541,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 5.033,
+      "sd": 1.484,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 6.05,
+      "sd": 1.489,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 7.922,
+      "sd": 1.651,
+      "n": 90
+     }
+    ],
+    "sequences": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 5.933,
+      "sd": 1.784,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 7.583,
+      "sd": 1.916,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 8.4,
+      "sd": 1.768,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10.489,
+      "sd": 2.029,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 2.217,
+      "sd": 0.454,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2.55,
+      "sd": 0.675,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.35,
+      "sd": 0.547,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 2.567,
+      "sd": 0.654,
+      "n": 90
+     }
+    ]
+   }
+  },
+  "autism": {
+   "trail-making": {
+    "timeA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 25938.303,
+      "sd": 3909.283,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 22846.487,
+      "sd": 2445.621,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 20276.155,
+      "sd": 2675.16,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 17558.996,
+      "sd": 2225.276,
+      "n": 90
+     }
+    ],
+    "timeB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 37448.455,
+      "sd": 6612.081,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 33132.057,
+      "sd": 5351.91,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 29430.567,
+      "sd": 5293.827,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 25585.063,
+      "sd": 4368.575,
+      "n": 90
+     }
+    ],
+    "errorsA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.167,
+      "sd": 0.376,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.15,
+      "sd": 0.36,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.233,
+      "sd": 0.465,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.089,
+      "sd": 0.286,
+      "n": 90
+     }
+    ],
+    "errorsB": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.9,
+      "sd": 0.915,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.867,
+      "sd": 0.929,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.967,
+      "sd": 0.882,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.778,
+      "sd": 0.845,
+      "n": 90
+     }
+    ],
+    "diffBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 11510.217,
+      "sd": 6825.282,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 10285.567,
+      "sd": 6086.741,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 9154.45,
+      "sd": 5934.792,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 8026.122,
+      "sd": 4985.317,
+      "n": 90
+     }
+    ],
+    "ratioBA": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1.467,
+      "sd": 0.294,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 1.467,
+      "sd": 0.286,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 1.476,
+      "sd": 0.328,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.482,
+      "sd": 0.328,
+      "n": 90
+     }
+    ]
+   },
+   "go-no-go": {
+    "hits": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 29.35,
+      "sd": 0.86,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 29.617,
+      "sd": 0.613,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 29.333,
+      "sd": 0.914,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 29.467,
+      "sd": 0.706,
+      "n": 90
+     }
+    ],
+    "goTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 30,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 30,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "omissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.65,
+      "sd": 0.86,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.383,
+      "sd": 0.613,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.667,
+      "sd": 0.914,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.533,
+      "sd": 0.706,
+      "n": 90
+     }
+    ],
+    "commissions": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.183,
+      "sd": 1.334,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2.7,
+      "sd": 1.442,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.083,
+      "sd": 1.319,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 1.3,
+      "sd": 1.043,
+      "n": 90
+     }
+    ],
+    "nogoTrials": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 10,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "meanRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 598.95,
+      "sd": 71.985,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 562,
+      "sd": 78.91,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 524.05,
+      "sd": 68.1,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 486.711,
+      "sd": 61.544,
+      "n": 90
+     }
+    ],
+    "sdRt": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 154.85,
+      "sd": 35.118,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 142.833,
+      "sd": 30.743,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 129.75,
+      "sd": 22.99,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 124.411,
+      "sd": 29.729,
+      "n": 90
+     }
+    ],
+    "anticipations": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ],
+    "slowResponses": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0,
+      "sd": 0,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0,
+      "sd": 0,
+      "n": 90
+     }
+    ]
+   },
+   "flanker": {
+    "accuracy": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.902,
+      "sd": 0.078,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.918,
+      "sd": 0.073,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.888,
+      "sd": 0.074,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.875,
+      "sd": 0.088,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.15,
+      "sd": 2.51,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2.633,
+      "sd": 2.343,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 3.6,
+      "sd": 2.359,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 4.011,
+      "sd": 2.802,
+      "n": 90
+     }
+    ],
+    "noResponse": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.317,
+      "sd": 0.504,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.283,
+      "sd": 0.555,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.267,
+      "sd": 0.516,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.378,
+      "sd": 0.646,
+      "n": 90
+     }
+    ],
+    "accCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.912,
+      "sd": 0.096,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.94,
+      "sd": 0.076,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.913,
+      "sd": 0.088,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.92,
+      "sd": 0.088,
+      "n": 90
+     }
+    ],
+    "accIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 0.892,
+      "sd": 0.117,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 0.896,
+      "sd": 0.101,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 0.863,
+      "sd": 0.125,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 0.83,
+      "sd": 0.139,
+      "n": 90
+     }
+    ],
+    "rtCongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 989.9,
+      "sd": 139.599,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 885.717,
+      "sd": 131.158,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 762.333,
+      "sd": 103.224,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 660,
+      "sd": 88.323,
+      "n": 90
+     }
+    ],
+    "rtIncongruent": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 1084.483,
+      "sd": 137.595,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 982.467,
+      "sd": 125.975,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 839.8,
+      "sd": 112.339,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 736.378,
+      "sd": 97.175,
+      "n": 90
+     }
+    ],
+    "flankerEffect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 94.583,
+      "sd": 60.526,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 96.75,
+      "sd": 68.344,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 77.467,
+      "sd": 65.221,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 76.378,
+      "sd": 44.425,
+      "n": 90
+     }
+    ]
+   },
+   "spatial-span": {
+    "maxSpan": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 3.383,
+      "sd": 0.922,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 3.967,
+      "sd": 0.843,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 4.533,
+      "sd": 0.833,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 5.256,
+      "sd": 0.919,
+      "n": 90
+     }
+    ],
+    "sequencesCorrect": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 4.317,
+      "sd": 1.557,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 5.667,
+      "sd": 1.633,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 6.633,
+      "sd": 1.573,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 8.189,
+      "sd": 1.715,
+      "n": 90
+     }
+    ],
+    "sequences": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 6.683,
+      "sd": 1.78,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 8.267,
+      "sd": 1.939,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 9,
+      "sd": 1.813,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 10.633,
+      "sd": 1.845,
+      "n": 90
+     }
+    ],
+    "errors": [
+     {
+      "ageMin": 5,
+      "ageMax": 6,
+      "mean": 2.367,
+      "sd": 0.551,
+      "n": 60
+     },
+     {
+      "ageMin": 7,
+      "ageMax": 8,
+      "mean": 2.6,
+      "sd": 0.718,
+      "n": 60
+     },
+     {
+      "ageMin": 9,
+      "ageMax": 10,
+      "mean": 2.367,
+      "sd": 0.551,
+      "n": 60
+     },
+     {
+      "ageMin": 11,
+      "ageMax": 13,
+      "mean": 2.444,
+      "sd": 0.583,
+      "n": 90
+     }
+    ]
+   }
+  }
+ }
+}
