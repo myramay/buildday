@@ -113,3 +113,4 @@ dashboard ◀── GET /api/patients[/:id], /api/sessions/:id[/events|/export]
 - Validity and hesitation thresholds are heuristics.
 - No authentication, authorization or encryption at rest.
 - Not yet tested with children or on iPad Safari hardware.
+# buildday
