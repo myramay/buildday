@@ -64,6 +64,11 @@
   --status-warn: oklch(0.7 0.13 75);
   --status-serious: oklch(0.6 0.16 35);
 
+  /* Trend-chart reference overlays: neutral hues, distinct from the accent and status colours. */
+  --ref-typical: oklch(0.5 0.12 260);
+  --ref-adhd: oklch(0.5 0.14 305);
+  --ref-autism: oklch(0.55 0.14 355);
+
   /* Kid surfaces: soft, warm, simple. */
   --kid-bg: oklch(0.975 0.012 85);
   --kid-ink: oklch(0.32 0.025 230);
