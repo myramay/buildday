@@ -37,7 +37,7 @@ export function computeSpan(events: RawEvent[], ctx: MetricsContext): TaskMetric
     for (let k = 1; k < s.taps.length; k++) {
       const gap = s.taps[k].t - s.taps[k - 1].t;
       if (gap >= HESITATION_MS)
-        hesitations.push({ startMs: round(s.taps[k - 1].t - (s.respStart ?? 0))!, durationMs: round(gap)!, location: `seq ${s.i + 1} (len ${s.length}) · before item ${k + 1}` });
+        hesitations.push({ trial: s.i, startMs: round(s.taps[k - 1].t - (s.respStart ?? 0))!, durationMs: round(gap)!, location: `seq ${s.i + 1} (len ${s.length}) · before item ${k + 1}` });
     }
 
 

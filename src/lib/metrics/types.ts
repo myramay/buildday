@@ -43,6 +43,8 @@ export type Hesitation = {
   location: string;
   /** Part B: the target being sought was a letter. */
   beforeLetter?: boolean;
+  /** Spatial span: index of the sequence the pause happened in. */
+  trial?: number;
 };
 
 export type SegmentTiming = { part?: "A" | "B"; label: string; ms: number; errors: number; hesitations: number };

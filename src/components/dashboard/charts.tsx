@@ -134,8 +134,8 @@ export function ThirdsChart({ thirds, unitLabel }: { thirds: ThirdsPoint[]; unit
   );
 }
 
-/** Response time per trial (or per sequence). Filled = correct, outlined = error, × row = no response. */
-export function TrialChart({ trials, title }: { trials: TrialPoint[]; title: string }) {
+/** Response time per trial (or per sequence). Filled = correct, outlined = error, × row = no response. Dashed line = `highlight` trial. */
+export function TrialChart({ trials, title, highlight }: { trials: TrialPoint[]; title: string; highlight?: number }) {
   const max = Math.max(1000, ...trials.map((t) => t.rtMs ?? 0));
   const data = trials.map((t) => ({ ...t, y: t.rtMs ?? max * 1.08, missing: t.rtMs == null }));
   return (
@@ -145,6 +145,7 @@ export function TrialChart({ trials, title }: { trials: TrialPoint[]; title: str
           {grid}
           <XAxis type="number" dataKey="i" tickFormatter={(v) => `${v + 1}`} tick={axis} tickLine={false} domain={["dataMin", "dataMax"]} />
           <YAxis type="number" dataKey="y" tickFormatter={sec} tick={axis} tickLine={false} axisLine={false} domain={[0, max * 1.12]} />
+          {highlight != null && <ReferenceLine x={highlight} stroke={WARN} strokeWidth={2} strokeDasharray="4 3" />}
           <Tooltip
             {...tooltipStyle}
             formatter={(_v, _n, item) => [
