@@ -13,7 +13,7 @@ export default function Home() {
         </Link>
       </SiteHeader>
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-16 md:px-8">
-        <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">Pathwise</h1>
+        <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">Constellate</h1>
         <p className="mt-4 max-w-xl text-lg text-muted-foreground text-pretty">
           Touch-based Trail Making, Go/No-Go, Flanker and spatial span for children, with every pointer event recorded and
           scored by versioned, testable metrics.

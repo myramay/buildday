@@ -7,7 +7,7 @@ export function Logo({ className }: { className?: string }) {
       <span className="relative flex size-7 items-center justify-center rounded-full bg-primary">
         <span className="size-2.5 rounded-full bg-primary-foreground" />
       </span>
-      <span className="text-lg">Pathwise</span>
+      <span className="text-lg">Constellate</span>
     </Link>
   );
 }

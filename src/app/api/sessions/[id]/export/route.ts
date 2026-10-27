@@ -19,7 +19,7 @@ export const GET = handle(async (req: Request, { params }: Ctx) => {
   const s = await prisma.session.findUnique({ where: { id }, include: { patient: true, clinician: true, results: true, events: true } });
   if (!s) throw new HttpError(404, "Session not found");
   const results = s.results.map(parseResult);
-  const base = `pathwise-${s.patient.code}-${s.startedAt.toISOString().slice(0, 10)}-${s.id.slice(-6)}`;
+  const base = `constellate-${s.patient.code}-${s.startedAt.toISOString().slice(0, 10)}-${s.id.slice(-6)}`;
 
   if (format === "csv") {
     const header = [

@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Pathwise — pediatric cognitive tasks with process data",
+  title: "Constellate — pediatric cognitive tasks with process data",
   description: "Touch-based Trail Making, Go/No-Go, Flanker and spatial span with raw event capture and a clinician dashboard.",
 };
 

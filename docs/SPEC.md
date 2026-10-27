@@ -2,6 +2,8 @@
 
 Version 0.1 · Metrics v1.0.0 · Task protocols `tmt-1`, `gng-1`, `flanker-1`, `span-1`
 
+> Sections 1–15 describe what is built. §16 lists v0.2 changes that are decided but **not yet implemented**; where they conflict, §16 is the target.
+
 ## 1. Purpose
 
 Pathwise administers short, game-like cognitive tasks to children (ages 5–13) on a tablet or laptop and gives clinicians the resulting **data**: conventional task scores, process measures derived from the full pointer/response stream, validity flags, charts, and change across sessions.
@@ -244,3 +246,35 @@ Client upload path: after each round the runner queues `events` (practice and te
 - Hesitation and validity thresholds are fixed heuristics pending empirical work.
 - No authentication or PHI safeguards (§12).
 - Not yet tested with children or on iPad Safari hardware.
+- **Low trial counts.** Go/No-Go has 10 no-go trials (commission rate moves in 10% steps); Flanker has 8 trials per cell, and flanker effects are unreliable at that count, especially with few correct incongruent trials. A 25% no-go rate at a 1.5–2 s pace may produce ceiling effects on commissions.
+- **Normality.** Percentile = Φ(z) assumes normal data; completion times and RTs are right-skewed. Any norms added must state whether they are on raw, log-transformed or empirical-percentile scales, and the comparison must follow that.
+- **Absolute timing.** The rAF timestamp marks the start of the frame, not when it reaches the display, and touchscreen input latency varies by device by tens of ms. Scripted Chromium tests cannot measure either. Within-device trends are sound; cross-device comparison and any future norms carry this offset.
+
+## 16. v0.2 changes (decided, not yet implemented)
+
+### 16.1 Data integrity
+
+- **Age per session.** `Session` gains `ageYears`, `ageMonths` and `grade`, recorded at administration; norm comparison uses session age. `Patient` keeps `code`, `dominantHand`, `isSample`. `POST /api/sessions` with an existing code whose submitted fields conflict returns **409** with the stored patient; the setup screen asks the clinician to confirm before continuing.
+- **Log all input.** Nothing is dropped at capture. Input before onset is logged as `response` / `tap` with `d.early = true`; Go/No-Go responses after the first with `d.extra = true`; key auto-repeat with `d.repeat = true`. Metrics skip flagged events unless a metric names them. New process metric `earlyResponses` (Go/No-Go, Flanker, span).
+- **Interruptions.** New events `visibility_hidden` / `visibility_visible` {pausedMs}. New validity flag `interrupted` (any hidden period). Trail Making times exclude paused time; the flag is still raised.
+- **Re-scoring.** `npm run rescore` recomputes `TaskResult`s from stored events with the current `METRICS_VERSION`. `TaskResult` becomes unique on (sessionId, taskType, version); the dashboard shows the newest version and older ones are kept.
+- **Per-response input type.** Every Go/No-Go, Flanker and span response records `pointerType`; `mouse_input` uses it instead of the session-level `(pointer: coarse)` inference.
+- **Patient management.** `PATCH /api/patients/:id` (dominantHand); `DELETE /api/patients/:id` removes the patient and all sessions, results and event logs.
+
+### 16.2 Administration with children
+
+- **Instructions.** The supervising adult reads a fixed script shown on the instruction screen while the child watches an animated demo. (Recorded audio narration is future work.)
+- **Practice criterion.** Trail Making: practice completed; Go/No-Go: ≥ 6/8 correct; Flanker: ≥ 4/6; span: ≥ 1/2. If not met, practice repeats once; if still not met, the adult chooses continue or skip. Logged as `practice_repeat` / `task_skipped`.
+- **Skip / abort.** The adult can skip the current task via a control hidden from the child (Esc, or long-press a corner). A skipped task gets a `TaskResult` with status `skipped`. A session is complete when every task has a result or a skip. Trail Making form assignment counts only completed standard sessions.
+- **Part B age gate.** Part B is off by default under age 8 (setup toggle to override, logged). `hesitationsBeforeLettersB` is replaced by `letterHesitationRatio` = hesitations per letter-target segment ÷ hesitations per number-target segment, reported only at age ≥ 8.
+- **Child variant (roadmap, not v0.2).** A Part B variant for ages 5–7 that alternates colour instead of letters (Color Trails–style design, original stimuli), with its own form layouts and no norms.
+
+### 16.3 Definitions resolved
+
+- **Trail Making errors.** One error per departure: further wrong circles crossed before returning to the last correct circle are not counted. After a lift, the child resumes from the last connected circle; touching down elsewhere draws nothing until they touch it.
+- **Board.** Square; "board width" = side length.
+- **Hesitation threshold.** ≥ 500 ms in every task (span previously > 500 ms).
+- **Go/No-Go.** The trial schedule (stimulus onsets) is fixed in advance and does not move with responses — this replaces "fixed SOA". Go responses < 150 ms count as hits, are excluded from RT, and are counted as `anticipations`. RTs > 1500 ms are excluded from `meanRt` / `sdRt` and counted as `slowResponses`.
+- **`postErrorMs`.** Go/No-Go: after commissions only. Flanker: after incorrect responses (not timeouts). n/a unless ≥ 3 post-error trials.
+- **Span.** Up to 3 sequences per length (e.g. correct, incorrect, correct advances). `errors` = incorrect sequences, timeouts included. `recoveryMs` is always n/a (confounded by sequence length, like `slowing`).
+- **Validity thresholds.** Trail Making `too_fast`: ≥ 3 segments < 150 ms (the old "mean segment < 150 ms" could not fire in practice). Span `inactivity`: any sequence timed out.

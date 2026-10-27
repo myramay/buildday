@@ -1,4 +1,4 @@
-# Pathwise
+# Constellate
 
 Touch-based pediatric cognitive tasks (Trail Making A/B, Go/No-Go, Flanker, Corsi-style spatial span) with full raw-event capture, versioned metrics, and a clinician dashboard.
 
