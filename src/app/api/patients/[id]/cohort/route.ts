@@ -17,13 +17,14 @@ export const GET = handle(async (_req: Request, { params }: Ctx) => {
     include: { session: { select: { patientId: true, patient: { select: { age: true, isSample: true } } } } },
   });
 
-  const byMetric = new Map<string, { values: number[]; kids: Map<string, { age: number; isSample: boolean }> }>();
+  type Group = { values: number[]; kids: Map<string, { age: number; isSample: boolean }> };
+  const byMetric = new Map<string, Group>();
   for (const row of rows) {
     const r = parseResult(row);
     for (const m of r.metrics.metrics) {
       if (m.kind !== "score" || m.value == null) continue;
       const key = `${r.taskType}:${m.key}`;
-      const g = byMetric.get(key) ?? { values: [], kids: new Map() };
+      const g: Group = byMetric.get(key) ?? { values: [], kids: new Map() };
       g.values.push(m.value);
       g.kids.set(row.session.patientId, row.session.patient);
       byMetric.set(key, g);

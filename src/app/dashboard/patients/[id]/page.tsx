@@ -4,14 +4,16 @@ import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Download, Info, Zap } from "lucide-react";
-import { HesitationMap, SegmentChart, ThirdsChart, TrendChart, TrialChart, type TrendPoint } from "@/components/dashboard/charts";
+import { HesitationMap, SegmentChart, ThirdsChart, TrendChart, TrialChart, type TrendBand, type TrendPoint } from "@/components/dashboard/charts";
 import { SampleBadge } from "@/components/dashboard/sample-badge";
 import { ScoreTable, ValidityChips, formatValue } from "@/components/dashboard/score-table";
 import { TrailReplay } from "@/components/dashboard/trail-replay";
 import { useApi } from "@/components/dashboard/use-api";
 import { buttonVariants } from "@/components/ui/button";
-import type { PatientDTO, ResultDTO, SessionDTO } from "@/lib/api-types";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { CohortStatDTO, PatientDTO, ResultDTO, SessionDTO } from "@/lib/api-types";
 import { TASK_LABELS, TASK_TYPES } from "@/lib/events";
+import { referenceRange, type ReferenceGroup } from "@/lib/norms";
 import { trailLayout, type TrailCircle } from "@/lib/tasks/protocol";
 import { cn } from "@/lib/utils";
 
@@ -76,7 +78,7 @@ function PatientView() {
         </div>
       </header>
 
-      {sessions.length > 0 && <TrendCard sessions={sessions} />}
+      {sessions.length > 0 && <TrendCard sessions={sessions} patientId={patient.id} age={patient.age} />}
 
       <section className="flex flex-col gap-3">
         <h2 className="text-sm font-semibold">Sessions</h2>
@@ -223,7 +225,41 @@ function useCircles(result: ResultDTO): Partial<Record<"A" | "B", TrailCircle[]>
 
 type MetricOption = { id: string; task: (typeof TASK_TYPES)[number]; key: string; label: string; unit: string };
 
-function TrendCard({ sessions }: { sessions: SessionDTO[] }) {
+type OverlayId = "cohort" | ReferenceGroup;
+const OVERLAYS: { id: OverlayId; label: string; color: string }[] = [
+  { id: "cohort", label: "Other kids here", color: "var(--muted-foreground)" },
+  { id: "typical", label: "Typical", color: "var(--ref-typical)" },
+  { id: "adhd", label: "ADHD", color: "var(--ref-adhd)" },
+  { id: "autism", label: "Autism", color: "var(--ref-autism)" },
+];
+
+/** Range for one overlay on the selected metric, or why there is none. */
+function overlayRange(
+  id: OverlayId,
+  opt: MetricOption,
+  age: number,
+  cohort: { data: Record<string, CohortStatDTO> | null; error: string | null },
+): { range?: { low: number; high: number; mid: number }; detail: string } {
+  if (id === "cohort") {
+    if (cohort.error) return { detail: "Couldn't load other kids' scores." };
+    if (!cohort.data) return { detail: "Loading…" };
+    const c = cohort.data[opt.id];
+    if (!c) return { detail: "No other kids have a standard session with this score yet." };
+    const sample = c.sampleKids ? ` · includes ${c.sampleKids} fictional SAMPLE kid${c.sampleKids === 1 ? "" : "s"}` : "";
+    return {
+      range: { low: c.q1, high: c.q3, mid: c.median },
+      detail: `middle 50% and median of ${c.sessions} standard sessions from ${c.kids} kid${c.kids === 1 ? "" : "s"}, ages ${c.ageMin}–${c.ageMax}${sample}`,
+    };
+  }
+  const r = referenceRange(opt.task, opt.key, id, age);
+  if (r.status === "unavailable") return { detail: r.note };
+  const { mean, sd, ageMin, ageMax, n } = r.band;
+  return { range: { low: mean - sd, high: mean + sd, mid: mean }, detail: `mean ± 1 SD, ages ${ageMin}–${ageMax}, n = ${n} · ${r.citation}` };
+}
+
+function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patientId: string; age: number }) {
+  const cohort = useApi<Record<string, CohortStatDTO>>(`/api/patients/${patientId}/cohort`);
+  const [shown, setShown] = useState<Set<OverlayId>>(new Set());
   const options = useMemo(() => {
     const seen = new Map<string, MetricOption>();
     for (const s of sessions)
@@ -244,6 +280,16 @@ function TrendCard({ sessions }: { sessions: SessionDTO[] }) {
     return { label: `#${i + 1} ${date(s.startedAt)}`, value: metric?.value ?? null, quick: s.protocol === "quick", flagged: n?.status === "compared" && n.flag };
   });
   const versions = [...new Set(sessions.flatMap((s) => s.results.filter((r) => r.taskType === opt.task).map((r) => r.version)))];
+  const overlays = OVERLAYS.map((o) => ({ ...o, ...overlayRange(o.id, opt, age, cohort) }));
+  const visible = overlays.filter((o) => o.range && shown.has(o.id));
+  const bands: TrendBand[] = visible.map((o) => ({ id: o.id, label: o.label, color: o.color, ...o.range! }));
+  const toggle = (id: OverlayId, on: boolean) =>
+    setShown((s) => {
+      const next = new Set(s);
+      if (on) next.add(id);
+      else next.delete(id);
+      return next;
+    });
 
   return (
     <section className="rounded-2xl border bg-card p-5">
@@ -263,7 +309,17 @@ function TrendCard({ sessions }: { sessions: SessionDTO[] }) {
           ))}
         </select>
       </div>
-      <TrendChart data={points} metricLabel={opt.label} unit={opt.unit} />
+      <div className="mb-3 flex flex-wrap gap-x-5 gap-y-2 text-sm" role="group" aria-label="Comparison overlays">
+        {overlays.map((o) => (
+          <label key={o.id} title={o.detail} className={cn("flex items-center gap-2", o.range ? "cursor-pointer" : "text-muted-foreground")}>
+            <Checkbox checked={!!o.range && shown.has(o.id)} disabled={!o.range} onCheckedChange={(on) => toggle(o.id, on)} />
+            <span aria-hidden className="w-4 border-t-2 border-dashed" style={{ borderColor: o.color }} />
+            {o.label}
+            {!o.range && <span className="text-xs">(no data)</span>}
+          </label>
+        ))}
+      </div>
+      <TrendChart data={points} metricLabel={opt.label} unit={opt.unit} bands={bands} />
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
         <span>Hollow point = quick-demo protocol (not comparable) · red outline = norm flag</span>
         <span>
@@ -271,6 +327,22 @@ function TrendCard({ sessions }: { sessions: SessionDTO[] }) {
           {versions.length > 1 && <strong className="ml-2 text-status-serious">Mixed metrics versions: {versions.join(", ")}</strong>}
         </span>
       </div>
+      {visible.length > 0 && (
+        <ul className="mt-2 flex flex-col gap-0.5 text-xs text-muted-foreground">
+          {visible.map((o) => (
+            <li key={o.id}>
+              <strong className="font-medium" style={{ color: o.color }}>
+                {o.label}:
+              </strong>{" "}
+              {o.detail}
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="mt-2 text-xs text-muted-foreground">
+        Typical / ADHD / Autism use only cited, published references for this exact task (norms.json). Group ranges overlap heavily, so a score inside a
+        group&apos;s range is not evidence of a diagnosis.
+      </p>
     </section>
   );
 }

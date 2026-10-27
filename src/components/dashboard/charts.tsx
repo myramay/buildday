@@ -30,7 +30,6 @@ const grid = <CartesianGrid stroke="var(--border)" vertical={false} />;
 const tooltipStyle = { contentStyle: { borderRadius: 10, border: "1px solid var(--border)", fontSize: 12 }, cursor: { fill: "var(--muted)", fillOpacity: 0.4 } };
 /** Axis/tooltip time label: ms below 1 s (avoids duplicate rounded ticks), seconds above. */
 const sec = (ms: number) => (ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`);
-const round2 = (v: number) => Math.round(v * 100) / 100;
 
 export function ChartFrame({ title, children, note }: { title: string; children: React.ReactNode; note?: string }) {
   return (
@@ -187,7 +186,7 @@ export type TrendBand = { id: string; label: string; low: number; high: number; 
 
 /** Session-over-session change for one metric. Hollow points = quick-demo protocol (not comparable). */
 export function TrendChart({ data, metricLabel, unit, bands = [] }: { data: TrendPoint[]; metricLabel: string; unit: string; bands?: TrendBand[] }) {
-  const fmt = (v: number) => (unit === "ms" ? sec(v) : unit === "fraction" ? `${Math.round(v * 100)}%` : `${round2(v)}`);
+  const fmt = (v: number) => (unit === "ms" ? sec(v) : unit === "fraction" ? `${Math.round(v * 100)}%` : `${v}`);
   return (
     <ResponsiveContainer width="100%" height={220}>
       <LineChart data={data} margin={{ top: 10, right: 12, bottom: 0, left: -8 }}>
