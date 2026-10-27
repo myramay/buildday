@@ -4,7 +4,7 @@ import type { TaskType } from "@/lib/events";
  * Bump on any change to a metric's definition or computation. Stored with every
  * TaskResult so results computed by different versions are never silently mixed.
  */
-export const METRICS_VERSION = "1.0.0";
+export const METRICS_VERSION = "1.1.0";
 
 export type MetricUnit = "ms" | "count" | "ratio" | "fraction" | "items";
 
@@ -24,7 +24,7 @@ export type Metric = {
   na?: string;
 };
 
-export type ValidityCode = "too_fast" | "inactivity" | "pen_lifts" | "mouse_input" | "small_board";
+export type ValidityCode = "too_fast" | "inactivity" | "pen_lifts" | "mouse_input" | "small_board" | "interrupted";
 
 export type ValidityFlag = {
   code: ValidityCode;
@@ -78,3 +78,7 @@ export const HESITATION_MS = 500;
 export const HESITATION_EPS = 0.02;
 /** Responses faster than this are anticipations, not reactions to the stimulus. */
 export const ANTICIPATION_MS = 150;
+/** Go/No-Go hits slower than this are counted but excluded from mean/SD RT. */
+export const SLOW_RESPONSE_MS = 1500;
+/** Post-error RT change needs at least this many post-error trials. */
+export const MIN_POST_ERROR_TRIALS = 3;

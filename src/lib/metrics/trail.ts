@@ -1,4 +1,5 @@
 import type { RawEvent } from "@/lib/events";
+import { interruptionFlag, usedMouse } from "./shared";
 import { mean, round, slowing, thirds } from "./stats";
 import {
   HESITATION_EPS,
@@ -157,6 +158,18 @@ export function trailPartMetrics(p: TrailPartData): TrailPartMetrics {
   };
 }
 
+/**
+ * Hesitations per letter-target segment ÷ hesitations per number-target segment
+ * (Part B alternates, so a raw count before letters is confounded by base rate).
+ */
+function letterHesitationRatio(p: TrailPartData, m: TrailPartMetrics): number | null {
+  const letters = p.circles.filter((c) => /[A-Z]/.test(c.label)).length;
+  const numbers = p.circles.length - letters;
+  const hL = m.hesitations.filter((h) => h.beforeLetter).length;
+  const hN = m.hesitations.length - hL;
+  return letters && numbers && hN ? round(hL / letters / (hN / numbers), 2) : null;
+}
+
 export function computeTrail(events: RawEvent[], ctx: MetricsContext): TaskMetrics {
   const parts = trailParts(events);
   const by = Object.fromEntries(parts.map((p) => [p.part, { data: p, m: trailPartMetrics(p) }])) as Partial<
@@ -187,7 +200,7 @@ export function computeTrail(events: RawEvent[], ctx: MetricsContext): TaskMetri
     metric("ttfrB", "Time to first touch (B)", B?.firstTouchMs ?? null, "ms", "process"),
     metric("hesitations", "Hesitations (count)", hes.length, "count", "process"),
     metric("hesitationMs", "Hesitations (total time)", round(hes.reduce((s, h) => s + h.durationMs, 0)), "ms", "process"),
-    metric("hesitationsBeforeLettersB", "Part B hesitations before letters", B ? B.hesitations.filter((h) => h.beforeLetter).length : null, "count", "process"),
+    metric("letterHesitationRatio", "Part B hesitation rate, letter ÷ number targets", by.B ? letterHesitationRatio(by.B.data, by.B.m) : null, "ratio", "process", undefined, "no hesitations before numbers"),
     metric("recoveryMs", "Error recovery time", round(mean([A?.recoveryMs, B?.recoveryMs].filter((v): v is number => v != null))), "ms", "process", undefined, "no errors"),
     metric("slowingA", "Slowing first→last third (A)", slowing(A?.thirds ?? null), "fraction", "process", undefined, "too few segments"),
     metric("slowingB", "Slowing first→last third (B)", slowing(B?.thirds ?? null), "fraction", "process", undefined, "too few segments"),
@@ -201,9 +214,9 @@ export function computeTrail(events: RawEvent[], ctx: MetricsContext): TaskMetri
   const validity: ValidityFlag[] = [];
   for (const p of parts) {
     const m = by[p.part]!.m;
-    const meanSeg = mean(m.segments);
-    if (meanSeg != null && meanSeg < 150)
-      validity.push({ code: "too_fast", label: "Implausibly fast", detail: `Part ${p.part}: mean ${Math.round(meanSeg)} ms per segment (< 150 ms).` });
+    const fastSegs = m.segments.filter((ms) => ms < 150).length;
+    if (fastSegs >= 3)
+      validity.push({ code: "too_fast", label: "Implausibly fast", detail: `Part ${p.part}: ${fastSegs} segments under 150 ms.` });
     if (m.longestGapMs > INACTIVITY_MS)
       validity.push({ code: "inactivity", label: "Inactivity > 10 s", detail: `Part ${p.part}: no input for ${(m.longestGapMs / 1000).toFixed(1)} s.` });
     if (m.lifts > p.circles.length)
@@ -211,9 +224,9 @@ export function computeTrail(events: RawEvent[], ctx: MetricsContext): TaskMetri
     if (p.boardMm != null && p.targetMm != null && p.boardMm < p.targetMm * 0.85)
       validity.push({ code: "small_board", label: "Board smaller than standard", detail: `Part ${p.part}: ${p.boardMm} mm vs ${p.targetMm} mm target (nominal).` });
   }
-  const pointerTypes = new Set(parts.flatMap((p) => p.pointerTypes));
-  if (pointerTypes.has("mouse") || (!pointerTypes.size && ctx.inputType === "mouse"))
+  if (usedMouse(events, ctx.inputType))
     validity.push({ code: "mouse_input", label: "Mouse input", detail: "Drawn with a mouse; timing and path are not comparable to touch/pen." });
+  validity.push(...interruptionFlag(events));
 
   const segmentsChart: SegmentTiming[] = parts.flatMap((p) => {
     const m = by[p.part]!.m;

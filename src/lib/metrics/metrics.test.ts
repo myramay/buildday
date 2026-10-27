@@ -164,6 +164,55 @@ describe("rt tasks", () => {
     expect(computeMetrics("go-no-go", ev, ctx).validity.map((v) => v.code)).toContain("too_fast");
   });
 
+  it("go/no-go: early/extra input is counted but never scored; slow hits leave mean RT", () => {
+    const ev: RawEvent[] = [
+      { t: 900, type: "response", d: { early: true, input: "touch" } },
+      { t: 1000, type: "stim_on", d: { i: 0, go: false } },
+      { t: 2700, type: "stim_on", d: { i: 1, go: true } },
+      { t: 3100, type: "response", d: { i: 1 } },
+      { t: 3200, type: "response", d: { extra: true, input: "touch" } },
+      { t: 4400, type: "stim_on", d: { i: 2, go: true } },
+      { t: 6100, type: "response", d: { i: 2 } },
+    ];
+    const m = computeMetrics("go-no-go", ev, ctx);
+    expect(val(m, "commissions")).toBe(0);
+    expect(val(m, "earlyResponses")).toBe(1);
+    expect(val(m, "hits")).toBe(2);
+    expect(val(m, "slowResponses")).toBe(1);
+    expect(val(m, "meanRt")).toBe(400);
+  });
+
+  it("go/no-go: post-error change needs ≥ 3 post-commission trials", () => {
+    const ev: RawEvent[] = [];
+    let t = 0;
+    const trial = (go: boolean, rt: number | null) => {
+      const i = ev.filter((e) => e.type === "stim_on").length;
+      ev.push({ t, type: "stim_on", d: { i, go } });
+      if (rt != null) ev.push({ t: t + rt, type: "response", d: { i } });
+      t += 1700;
+    };
+    for (let k = 0; k < 3; k++) {
+      trial(true, 400);
+      trial(false, 300); // commission
+      trial(true, 600); // post-commission hit
+    }
+    expect(val(computeMetrics("go-no-go", ev, ctx), "postErrorMs")).toBe(200);
+    expect(val(computeMetrics("go-no-go", ev.slice(0, 8), ctx), "postErrorMs")).toBeNull();
+  });
+
+  it("flags an interrupted task and per-press mouse input", () => {
+    const ev: RawEvent[] = [
+      { t: 0, type: "stim_on", d: { i: 0, go: true } },
+      { t: 380, type: "input_device", d: { pointerType: "mouse" } },
+      { t: 400, type: "response", d: { i: 0 } },
+      { t: 900, type: "visibility_hidden" },
+      { t: 5900, type: "visibility_visible", d: { pausedMs: 5000 } },
+    ];
+    const codes = computeMetrics("go-no-go", ev, ctx).validity.map((v) => v.code);
+    expect(codes).toContain("interrupted");
+    expect(codes).toContain("mouse_input");
+  });
+
   it("simulated go/no-go has the configured structure", () => {
     const m = computeMetrics("go-no-go", simulateGoNoGo(mulberry32(3), { rtMean: 450, rtSdFrac: 0.1, omission: 0, commission: 0 }), ctx);
     expect(val(m, "goTrials")).toBe(30);

@@ -1,6 +1,7 @@
 import type { RawEvent } from "@/lib/events";
 import { mean, round, sd, slowing, thirds } from "./stats";
-import { ANTICIPATION_MS, INACTIVITY_MS, type Metric, type MetricsContext, type TaskMetrics, type TrialPoint, type ValidityFlag } from "./types";
+import { earlyResponseCount, interruptionFlag, isFlaggedInput, usedMouse } from "./shared";
+import { ANTICIPATION_MS, INACTIVITY_MS, MIN_POST_ERROR_TRIALS, SLOW_RESPONSE_MS, type Metric, type MetricsContext, type TaskMetrics, type TrialPoint, type ValidityFlag } from "./types";
 
 /* Shared helpers for the single-response RT tasks (Go/No-Go, Flanker). */
 
@@ -9,18 +10,21 @@ type Trial = { i: number; onset: number; rt: number | null; data: Record<string,
 /** Pair stim_on with its response (by trial index). */
 function trialsFrom(events: RawEvent[]): Trial[] {
   const responses = new Map<number, number>();
-  for (const e of events) if (e.type === "response" && typeof e.d?.i === "number" && !responses.has(e.d.i)) responses.set(e.d.i, e.t);
+  for (const e of events) if (e.type === "response" && !isFlaggedInput(e) && typeof e.d?.i === "number" && !responses.has(e.d.i)) responses.set(e.d.i, e.t);
   return events
     .filter((e) => e.type === "stim_on")
     .sort((a, b) => a.t - b.t)
     .map((e) => {
       const i = e.d!.i as number;
       const r = responses.get(i);
-      return { i, onset: e.t, rt: r == null ? null : round(r - e.t), data: { ...e.d, response: events.find((x) => x.type === "response" && x.d?.i === i)?.d } };
+      return { i, onset: e.t, rt: r == null ? null : round(r - e.t), data: { ...e.d, response: events.find((x) => x.type === "response" && !isFlaggedInput(x) && x.d?.i === i)?.d } };
     });
 }
 
-/** Mean RT right after an error minus mean RT elsewhere (post-error slowing). */
+/**
+ * Mean RT right after an error minus mean RT elsewhere (post-error slowing).
+ * Needs ≥ MIN_POST_ERROR_TRIALS valid post-error trials.
+ */
 function postErrorDelta(rts: { rt: number | null; error: boolean; valid: boolean }[]) {
   const after: number[] = [];
   const other: number[] = [];
@@ -30,7 +34,7 @@ function postErrorDelta(rts: { rt: number | null; error: boolean; valid: boolean
   });
   const a = mean(after);
   const o = mean(other);
-  return a != null && o != null ? round(a - o) : null;
+  return after.length >= MIN_POST_ERROR_TRIALS && a != null && o != null ? round(a - o) : null;
 }
 
 /** Longest stretch with no response while the task was presenting stimuli. */
@@ -50,8 +54,8 @@ function commonValidity(trials: Trial[], events: RawEvent[], ctx: MetricsContext
   const end = events.find((e) => e.type === "task_end")?.t ?? (trials.at(-1)?.onset ?? 0);
   const gap = longestSilence(trials, end);
   if (gap > INACTIVITY_MS) flags.push({ code: "inactivity", label: "Inactivity > 10 s", detail: `No response for ${(gap / 1000).toFixed(1)} s.` });
-  if (ctx.inputType === "mouse") flags.push({ code: "mouse_input", label: "Mouse input", detail: "Session used a mouse/keyboard; RTs are not comparable to touch." });
-  return flags;
+  if (usedMouse(events, ctx.inputType)) flags.push({ code: "mouse_input", label: "Mouse input", detail: "Responses made with a mouse; RTs are not comparable to touch." });
+  return [...flags, ...interruptionFlag(events)];
 }
 
 const m = (key: string, label: string, value: number | null, unit: Metric["unit"], kind: Metric["kind"], worse?: Metric["worse"], na?: string): Metric => ({
@@ -70,12 +74,14 @@ export function computeGoNoGo(events: RawEvent[], ctx: MetricsContext): TaskMetr
   const nogo = trials.filter((t) => !t.data.go);
   const hits = go.filter((t) => t.rt != null);
   const commissions = nogo.filter((t) => t.rt != null).length;
-  const validHitRts = hits.map((t) => t.rt!).filter((rt) => rt >= ANTICIPATION_MS);
+  const inRange = (rt: number) => rt >= ANTICIPATION_MS && rt <= SLOW_RESPONSE_MS;
+  const validHitRts = hits.map((t) => t.rt!).filter(inRange);
   const third = thirds(validHitRts);
+  // Post-error slowing follows commissions only (an omission has no response to slow after).
   const seq = trials.map((t) => ({
     rt: t.rt,
-    error: t.data.go ? t.rt == null : t.rt != null,
-    valid: !!t.data.go && t.rt != null && t.rt >= ANTICIPATION_MS,
+    error: !t.data.go && t.rt != null,
+    valid: !!t.data.go && t.rt != null && inRange(t.rt),
   }));
   const kind = (t: Trial) => (t.data.go ? (t.rt != null ? "hit" : "omission") : t.rt != null ? "commission" : "correct_withhold");
 
@@ -91,13 +97,16 @@ export function computeGoNoGo(events: RawEvent[], ctx: MetricsContext): TaskMetr
       m("nogoTrials", "No-go trials", nogo.length, "count", "score"),
       m("meanRt", "Mean RT (hits)", round(mean(validHitRts)), "ms", "score", "higher"),
       m("sdRt", "RT SD (hits)", round(sd(validHitRts)), "ms", "score", "higher"),
+      m("anticipations", `Hits faster than ${ANTICIPATION_MS} ms`, hits.filter((t) => t.rt! < ANTICIPATION_MS).length, "count", "score", "higher"),
+      m("slowResponses", `Hits slower than ${SLOW_RESPONSE_MS} ms`, hits.filter((t) => t.rt! > SLOW_RESPONSE_MS).length, "count", "score", "higher"),
       m("ttfr", "Time to first response", trials.find((t) => t.rt != null)?.rt ?? null, "ms", "process", undefined, "no responses"),
-      m("postErrorMs", "Post-error RT change", postErrorDelta(seq), "ms", "process", undefined, "no errors followed by a hit"),
+      m("earlyResponses", "Responses before stimulus onset", earlyResponseCount(events), "count", "process"),
+      m("postErrorMs", "Post-commission RT change", postErrorDelta(seq), "ms", "process", undefined, `fewer than ${MIN_POST_ERROR_TRIALS} commissions followed by a hit`),
       m("slowing", "Slowing first→last third", slowing(third), "fraction", "process", undefined, "too few hits"),
     ],
     validity: commonValidity(trials, events, ctx),
     charts: {
-      trials: trials.map<TrialPoint>((t) => ({ i: t.i, rtMs: t.rt, correct: !seq[trials.indexOf(t)].error, kind: kind(t) })),
+      trials: trials.map<TrialPoint>((t) => ({ i: t.i, rtMs: t.rt, correct: t.data.go ? t.rt != null : t.rt == null, kind: kind(t) })),
       thirds: third ? [{ label: "Hit RT", firstMs: round(third.first)!, lastMs: round(third.last)! }] : [],
     },
   };
@@ -116,7 +125,8 @@ export function computeFlanker(events: RawEvent[], ctx: MetricsContext): TaskMet
   const rtC = rtOf(cong);
   const rtI = rtOf(inc);
   const third = thirds(trials.filter(valid).map((t) => t.rt!));
-  const seq = trials.map((t) => ({ rt: t.rt, error: !correct(t), valid: valid(t) }));
+  // Post-error = after a wrong-direction response; timeouts don't count as errors here.
+  const seq = trials.map((t) => ({ rt: t.rt, error: t.rt != null && !correct(t), valid: valid(t) }));
 
   return {
     taskType: "flanker",
@@ -132,7 +142,8 @@ export function computeFlanker(events: RawEvent[], ctx: MetricsContext): TaskMet
       m("rtIncongruent", "Mean RT incongruent", rtI, "ms", "score", "higher"),
       m("flankerEffect", "Flanker effect (I − C)", rtC != null && rtI != null ? rtI - rtC : null, "ms", "score", "higher"),
       m("ttfr", "Time to first response", trials[0]?.rt ?? null, "ms", "process", undefined, "no response on trial 1"),
-      m("postErrorMs", "Post-error RT change", postErrorDelta(seq), "ms", "process", undefined, "no errors followed by a correct response"),
+      m("earlyResponses", "Responses before stimulus onset", earlyResponseCount(events), "count", "process"),
+      m("postErrorMs", "Post-error RT change", postErrorDelta(seq), "ms", "process", undefined, `fewer than ${MIN_POST_ERROR_TRIALS} errors followed by a correct response`),
       m("slowing", "Slowing first→last third", slowing(third), "fraction", "process", undefined, "too few correct responses"),
     ],
     validity: commonValidity(trials, events, ctx),

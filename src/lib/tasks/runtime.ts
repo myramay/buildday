@@ -53,6 +53,27 @@ export function createTaskContext(opts: {
     return () => signal.removeEventListener("abort", fn);
   }
 
+  // Interruptions and input device are recorded for every task (validity flags).
+  let hiddenAt: number | null = null;
+  const onVisibility = () => {
+    if (document.visibilityState === "hidden") {
+      hiddenAt = performance.now();
+      log("visibility_hidden");
+    } else if (hiddenAt != null) {
+      log("visibility_visible", { d: { pausedMs: Math.round(performance.now() - hiddenAt) } });
+      hiddenAt = null;
+    }
+  };
+  const onPointer = (e: PointerEvent) => log("input_device", { t: e.timeStamp, d: { pointerType: e.pointerType } });
+  if (typeof document !== "undefined") {
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pointerdown", onPointer, { capture: true });
+    onAbort(() => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pointerdown", onPointer, { capture: true });
+    });
+  }
+
   const wait = (ms: number) =>
     new Promise<void>((resolve, reject) => {
       if (signal.aborted) return reject(new TaskAbortedError());
@@ -131,10 +152,12 @@ export function createTaskContext(opts: {
       });
 
       const onRespond: RespondFn<R> = (response, eventTimeStamp) => {
-        if (settled || onset === null || responses.length >= count) return;
+        if (settled) return;
         const t = eventTimeStamp && eventTimeStamp > 0 ? eventTimeStamp : performance.now();
-        // Input from before the stimulus was on screen doesn't count.
-        if (t < onset) return;
+        // Input from before the stimulus was on screen, or after the window is
+        // full, doesn't count — but it is logged (flagged) rather than dropped.
+        if (onset === null || t < onset) return log("response", { t, d: { early: true, input: response } });
+        if (responses.length >= count) return log("response", { t, d: { extra: true, input: response } });
         responses.push({ response, rtMs: Math.round(t - onset), tPerf: t });
         if (responses.length >= count && !fixedDuration) finish(false);
       };
