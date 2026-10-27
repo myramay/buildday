@@ -1,69 +1,105 @@
-# Pathwise — Presentation Notes
+# Constellate: Pitch + Live Demo (4:00)
 
-## The one-line pitch
+Bullets are cues, not lines to read. **Bold** = must say.
 
-Kids wait months for an evaluation. Pathwise gives clinicians objective data from a 15-minute tablet session, so they can decide who needs to be seen first and walk into the appointment with more information.
+## Before you go on
 
-> Don't call it a diagnostic tool or say it "tests for autism/ADHD." It's a screening and process-data tool that supports clinical judgment, and the tasks measure attention and executive function, not autism.
+- [ ] **Do one full Quick run today and check it saves.** The latest changes haven't been clicked through in a browser yet.
+- [ ] `/test` setup screen already open: clinician picked, patient code typed (e.g. `DEMO-01`, never a real name), **Quick** protocol selected.
+- [ ] Second tab: `/dashboard`, then `SAMPLE-A01` (has four sessions, for the trend chart).
+- [ ] A teammate plays, not a judge. Explaining the game to a judge costs about 30 seconds.
+- [ ] **Why Quick:** the standard protocol (40 Go/No-Go trials, 32 Flanker trials, practice rounds) takes far longer than 4 minutes. Quick runs all four games in about 1.5 minutes.
 
-## The problem (CDC and WHO stats)
+---
 
-- **Autism, US:** about **1 in 31** eight-year-olds (3.2%) were identified with autism in 2022 (CDC ADDM Network, 2025 report). [CDC MMWR](https://www.cdc.gov/mmwr/volumes/74/ss/ss7402a1.htm)
-- **Late diagnosis:** the median age of earliest known autism diagnosis was **47 months, nearly 4 years**. By community it ranged from 36 months to **69.5 months** (CDC, same report).
-- **ADHD, US:** an estimated **7 million children aged 3–17 (11.7%)** have a current ADHD diagnosis (CDC, from 2024 national survey data). [CDC ADHD data](https://www.cdc.gov/adhd/data/index.html)
-- **Treatment gap:** in 2022, **nearly 1 in 3 (30.1%)** US children with current ADHD received **no ADHD-specific treatment** (CDC study of the 2022 national survey). [CDC study](https://stacks.cdc.gov/view/cdc/160350)
-- **Autism, worldwide:** about **1 in 127 people** (WHO, 2021 estimate). In many low- and middle-income countries, prevalence is **unknown**. [WHO autism fact sheet](https://www.who.int/news-room/fact-sheets/detail/autism-spectrum-disorders)
-- **Children's mental health, worldwide:** **1 in 7** 10–19-year-olds has a mental disorder, and these conditions remain **largely unrecognized and untreated** (WHO). [WHO adolescent fact sheet](https://www.who.int/news-room/fact-sheets/detail/adolescent-mental-health)
-- **Early onset:** **one-third** of mental health conditions emerge before age 14, and **half** before 18 (WHO/UNICEF guidance, 2024). [WHO news release](https://www.who.int/news/item/09-10-2024-who-and-unicef-launch-guidance-to-improve-access-to-mental-health-care-for-children-and-young-people)
+## 0:00–0:40 · Hook and problem (Myra)
 
-**Best line for the pitch:** "Autism is identified in about 1 in 31 kids, but the typical diagnosis comes at almost 4, and nearly 1 in 3 kids with ADHD get no treatment for it. Kids are waiting, and clinicians need better data sooner."
+*Myra is still editing the intro. Keep it to these beats.*
 
-> Keep the ADHD wording exact: 7 million is a *current* diagnosis (2024 data). Don't call it "ever diagnosed."
+- Names and majors: Myra, [major]; Rachel, Data Science and Math.
+- **Personal story:** waited almost two years for neuropsych testing (around 2015). The backlog is worse now.
+- **The stakes:** a child who may have ADHD or a learning difference waits **months to years**, falling further behind with no support plan.
+- **The scale:** **about 7 million US kids have a current ADHD diagnosis** (CDC), and **nearly 1 in 3 of them get no ADHD-specific treatment** (CDC).
+- **The tools are old:** paper tests, a stopwatch, scoring by hand. The digital versions are proprietary, licensed per seat, and capture little more than paper does.
 
-## What Pathwise does
+## 0:40–1:00 · Solution
 
-- Four short, game-like tasks for ages 5–13 on a tablet or laptop:
-  - **Dot Trails** (Trail Making): processing speed and switching between tasks
-  - **Star Stopper** (Go/No-Go): inhibition
-  - **Fish Friends** (Flanker): selective attention
-  - **Firefly Path** (spatial span): visual working memory
-- Gives clinicians **data, not diagnoses**: scores, process measures from every tap and pen stroke, charts, and change across sessions.
-- No specialist is needed to run a session. It's built to be repeated, with alternate forms and trends across sessions.
+- **"We built Constellate: four standard clinical tasks, rebuilt as games kids actually want to play."**
+- Name them quickly. The demo shows them in action.
+  - **Dot Trails** (Trail Making): speed and switching
+  - **Star Stopper** (Go/No-Go): impulse control
+  - **Fish Friends** (Flanker): focus amid distraction
+  - **Firefly Path** (Corsi blocks): visual working memory
+- **The data a stopwatch can't capture:** where the child hesitated, how they recovered from mistakes, and whether they slowed down.
 
-## Why it's trustworthy
+## 1:00–2:45 · Live demo (teammate plays; narrate over it)
 
-- **Every input is recorded** with millisecond timing, including taps that come too early. Scores can always be recomputed from the raw data.
-- **Data-quality flags sit next to every score**: responses that are implausibly fast, inactivity, tab switches, mouse instead of touch, a screen that's too small.
-- **One versioned scoring module on the server.** When a metric's definition changes, one command re-scores the stored history.
-- **Honest about norms.** We don't invent norms. Published child norms exist for the paper versions of these tests but not for this administration, so every comparison is clearly labeled a placeholder.
-- **Clinician-friendly:** charts never rely on colour alone, and there's a replay of the child's actual drawing path in Trail Making.
+Narrate one line per game while it runs. Don't explain the rules twice; the on-screen instructions do it.
 
-## Impact: say what it does, not results
+- **Dot Trails:**
+  - "On paper a psychologist does this with a stopwatch. Part A: numbers. Part B: alternate numbers and letters."
+  - **"That switch is where executive function shows up."**
+  - If you're asked about circle count, Quick uses 8 circles; the full version uses 15.
+- **Star Stopper:** "Tap every shape **except the red star**. This measures impulse control."
+- **Fish Friends:** "Which way is the **middle** fish swimming? The others try to distract you."
+- **Firefly Path:** "Repeat the fireflies' path. The sequences get longer each round."
+- While it saves: **"Every tap and stroke is recorded to the millisecond and scored on the server instantly."**
+- Wait for **Open in dashboard** to light up. It only enables once everything is saved.
 
-- About 15 minutes per session, on hardware clinics already own.
-- Objective, repeatable data from the waitlist period, which is rarely captured today.
-- Process data that paper tests can't capture: where a child hesitated, how they recovered from errors, whether they slowed down.
+## 2:45–3:25 · Dashboard
 
-**We have no outcome data yet. Don't claim any.**
+- **Trail Making:**
+  - Completion times, errors, and the B-versus-A switching cost.
+  - **Click the hesitation count.** It jumps to the list; click one and **the replay jumps to that moment.** This is the wow moment.
+  - Point at the replay: **"This is the child's actual path."**
+- **Validity flags:**
+  - **"It tells the clinician when not to trust a score."**
+  - On a laptop it will show **"Mouse input"**. Say: "See, it caught that we used a mouse, not touch."
+- **Other tasks, one line:** impulsive taps and misses in Star Stopper, the distraction cost in Fish Friends, the longest sequence held in Firefly Path.
+- **Switch to the `SAMPLE-A01` tab:** **"Tracked across sessions, so you see progress over time."**
+- **Norms, the honest version:**
+  - "Published norms only plug in when they match the exact test. Until then, it says placeholder."
+  - **Don't say "compared against published norms."** Every norm is currently a placeholder, and it says so on screen.
 
-## Demo path (safest)
+## 3:25–3:50 · What's next
 
-1. Open `/dashboard`.
-2. Click a **SAMPLE** patient (`SAMPLE-A01` shows improvement over four sessions).
-3. Show the trend chart, then a session's score table with validity flags, then the Trail Making path replay.
-4. Skip a live `/test` run unless it's been tested since the latest changes.
+- **Tablets.** That's how kids are tested in clinics, and the app already supports touch.
+- **More of the battery,** including computer vision to score hands-on tasks like block building, which are scored by eye today.
+- **HIPAA-ready infrastructure and clinical validation.** Start with private practices and research labs while approval for clinical use is pending.
+- **Long term, a "patient brain":** one place where a child's cognitive profile lives and grows.
 
-## Roadmap (v0.2)
+## 3:50–4:00 · Close
 
-- Record age at each session for norm comparisons.
-- An adult-guided flow for young kids: a read-aloud script, practice pass marks, a hidden "skip task" control.
-- Part B of Trail Making turned off by default under age 8, plus a colour-based version for ages 5–7, who may not know their letters yet.
-- A clinical pilot with children and testing on iPad hardware.
+- **"The tests run themselves, so the clinician spends their time interpreting. We connect the dots in how a child thinks."**
 
-## Hard questions
+---
+
+## Don't say
+
+- "Diagnoses ADHD or autism." It's a **screening and process-data tool** that supports clinicians.
+- "Exactly matches the traditional test." Say **"based on"** the standard tasks.
+- "Compared against published norms." All norms are **placeholders**.
+- "Pauses cluster around the letters." Only say it if you can see it in that run.
+- Any impact or outcome numbers. **We have no outcome data yet.**
+
+## Backup: more stats (CDC/WHO, if asked)
+
+- **Late autism diagnosis:** the median age of earliest diagnosis is **47 months**, nearly 4 years, and up to **69.5 months** in some communities. [CDC MMWR, 2025](https://www.cdc.gov/mmwr/volumes/74/ss/ss7402a1.htm)
+- **Autism, US:** **1 in 31** eight-year-olds (CDC, 2022 data).
+- **ADHD:** **7 million children aged 3–17 (11.7%)** have a *current* diagnosis (CDC, 2024 data); don't call it "ever diagnosed." **30.1%** got no ADHD-specific treatment (2022). [CDC ADHD data](https://www.cdc.gov/adhd/data/index.html) · [CDC study](https://stacks.cdc.gov/view/cdc/160350)
+- **Worldwide:**
+  - **1 in 127** people are autistic, and prevalence is **unknown** in many low- and middle-income countries. [WHO autism fact sheet](https://www.who.int/news-room/fact-sheets/detail/autism-spectrum-disorders)
+  - **1 in 7** 10–19-year-olds has a mental disorder, and these conditions remain **largely unrecognized and untreated**. [WHO adolescent fact sheet](https://www.who.int/news-room/fact-sheets/detail/adolescent-mental-health)
+  - **Half** of mental health conditions start before age 18. [WHO/UNICEF, 2024](https://www.who.int/news/item/09-10-2024-who-and-unicef-launch-guidance-to-improve-access-to-mental-health-care-for-children-and-young-people)
+
+## Backup: hard questions
 
 - **"Is this diagnostic?"** No. It's a screening and process-data tool that supports clinical judgment.
-- **"Is it validated?"** Not yet. It hasn't been tested with children. A clinical pilot is the next step, and we won't show norm comparisons until validated norms exist.
-- **"Is it ready for real patient data?"** Not yet. It has no login, audit log or encryption at rest, and those come before any real data. Patients are pseudonymous codes, and no names are stored.
-- **"Does it work across devices?"** Screen size and timing vary by device. We record device details with every session, so we can correct for them later.
-- **"What's the evidence the tasks work?"** They're well-established, public-domain research tasks (Trail Making, Go/No-Go, Flanker, Corsi-style span), rebuilt with original kid-friendly visuals.
+- **"Is it validated?"** Not yet. It hasn't been tested with children; a clinical pilot is next. Norm comparisons stay off until validated norms exist.
+- **"Can it hold real patient data?"** Not yet. It has no login, audit log or encryption at rest, and those come first. Patients are pseudonymous codes, and no names are stored.
+- **"Does it work across devices?"** Screen size and timing vary by device, so we record device details with every session to correct for them later.
+- **"Why trust the data?"**
+  - Every input is logged, including too-early taps and tab switches.
+  - Validity flags sit next to every score.
+  - Scoring is versioned, and one command re-scores all stored history.
+- **"What about young kids who don't know letters?"** Part B is the hard part under age 8. A color-based version for ages 5–7 is on the roadmap.
