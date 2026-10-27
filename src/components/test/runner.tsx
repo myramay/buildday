@@ -7,6 +7,7 @@ import { CloudOff, Pause } from "lucide-react";
 import { InstructionScreen } from "@/components/kid/instruction-screen";
 import { KidButton } from "@/components/kid/kid-button";
 import { SHAPE_KINDS, Shape } from "@/components/kid/shape";
+import { TASK_LABELS } from "@/lib/events";
 import { BATTERY } from "@/lib/tasks/registry";
 import { TaskAbortedError, createTaskContext } from "@/lib/tasks/runtime";
 import type { TaskMode } from "@/lib/tasks/types";
@@ -117,6 +118,7 @@ export function TestRunner({ s }: { s: RunnerSession }) {
     <div className="fixed inset-0 flex select-none flex-col bg-[var(--kid-bg)] text-[var(--kid-ink)]">
       {phase.kind !== "done" && (
         <header className="flex items-center gap-4 px-5 pt-5 md:px-10 md:pt-7">
+          {s.quick && <DemoTaskLabel task={currentTask(phase)} />}
           <div className="flex flex-1 items-center gap-1.5" aria-label={`Progress ${Math.round(overall * 100)}%`}>
             {BATTERY.map((t, i) => {
               const fill = Math.min(1, Math.max(0, overall * BATTERY.length - i));
@@ -188,6 +190,35 @@ export function TestRunner({ s }: { s: RunnerSession }) {
 
         {phase.kind === "done" && <DoneScreen s={s} save={save} onRetry={() => void flush()} />}
       </main>
+    </div>
+  );
+}
+
+/** Index of the task the current screen belongs to (the upcoming one on a transition). */
+function currentTask(phase: Phase): number {
+  switch (phase.kind) {
+    case "intro":
+    case "running":
+    case "ready":
+      return phase.task;
+    case "transition":
+      return phase.completed;
+    default:
+      return 0;
+  }
+}
+
+/** Quick demo only: names the test on screen so observers can follow along. */
+function DemoTaskLabel({ task }: { task: number }) {
+  const t = BATTERY[Math.min(task, BATTERY.length - 1)];
+  return (
+    <div className="shrink-0 rounded-xl bg-white px-3 py-1.5 leading-tight ring-1 ring-black/5" data-testid="demo-task-label">
+      <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--kid-ink)]/50">
+        Demo · Test {task + 1} of {BATTERY.length}
+      </div>
+      <div className="text-sm font-semibold md:text-base">
+        {TASK_LABELS[t.id]} <span className="font-normal text-[var(--kid-ink)]/60">· “{t.name}”</span>
+      </div>
     </div>
   );
 }
