@@ -249,11 +249,11 @@ function useCircles(result: ResultDTO): Partial<Record<"A" | "B", TrailCircle[]>
 type MetricOption = { id: string; task: (typeof TASK_TYPES)[number]; key: string; label: string; unit: string };
 
 type OverlayId = "cohort" | ReferenceGroup;
-const OVERLAYS: { id: OverlayId; label: string; color: string }[] = [
-  { id: "cohort", label: "Other kids here", color: "var(--muted-foreground)" },
-  { id: "typical", label: "Typical", color: "var(--ref-typical)" },
-  { id: "adhd", label: "ADHD", color: "var(--ref-adhd)" },
-  { id: "autism", label: "Autism", color: "var(--ref-autism)" },
+const OVERLAYS: { id: OverlayId; label: string; color: string; dash: string }[] = [
+  { id: "cohort", label: "Other kids here", color: "var(--muted-foreground)", dash: "5 4" },
+  { id: "typical", label: "Typical", color: "var(--ref-typical)", dash: "2 3" },
+  { id: "adhd", label: "ADHD", color: "var(--ref-adhd)", dash: "8 3 2 3" },
+  { id: "autism", label: "Autism", color: "var(--ref-autism)", dash: "12 4" },
 ];
 
 /** Range for one overlay on the selected metric, or why there is none. */
@@ -314,7 +314,7 @@ function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patie
   const versions = [...new Set(sessions.flatMap((s) => s.results.filter((r) => r.taskType === opt.task).map((r) => r.version)))];
   const overlays = OVERLAYS.map((o) => ({ ...o, ...overlayRange(o.id, opt, age, cohort) }));
   const visible = overlays.filter((o) => o.range && shown.has(o.id));
-  const bands: TrendBand[] = visible.map((o) => ({ id: o.id, label: o.fictional ? `${o.label} (fictional)` : o.label, color: o.color, ...o.range! }));
+  const bands: TrendBand[] = visible.map((o) => ({ id: o.id, label: o.fictional ? `${o.label} (fictional)` : o.label, color: o.color, dash: o.dash, ...o.range! }));
   const toggle = (id: OverlayId, on: boolean) =>
     setShown((s) => {
       const next = new Set(s);
@@ -345,7 +345,9 @@ function TrendCard({ sessions, patientId, age }: { sessions: SessionDTO[]; patie
         {overlays.map((o) => (
           <label key={o.id} title={o.detail} className={cn("flex items-center gap-2", o.range ? "cursor-pointer" : "text-muted-foreground")}>
             <Checkbox checked={!!o.range && shown.has(o.id)} disabled={!o.range} onCheckedChange={(on) => toggle(o.id, on)} />
-            <span aria-hidden className="w-4 border-t-2 border-dashed" style={{ borderColor: o.color }} />
+            <svg aria-hidden width="22" height="6" className="shrink-0">
+              <line x1="0" y1="3" x2="22" y2="3" stroke={o.color} strokeWidth={2} strokeDasharray={o.dash} />
+            </svg>
             {o.label}
             {!o.range && <span className="text-xs">(no data)</span>}
             {o.fictional && <span className="rounded bg-status-warn/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">fictional</span>}

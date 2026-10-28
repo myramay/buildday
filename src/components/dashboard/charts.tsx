@@ -182,8 +182,8 @@ export function TrialChart({ trials, title, highlight }: { trials: TrialPoint[];
 }
 
 export type TrendPoint = { label: string; value: number | null; quick: boolean; flagged: boolean };
-/** Horizontal reference range behind the trend line: shaded low–high, dashed labelled line at mid. */
-export type TrendBand = { id: string; label: string; low: number; high: number; mid: number; color: string };
+/** Horizontal reference range behind the trend line: shaded low–high, dashed labelled line at mid (own dash pattern, not colour alone). */
+export type TrendBand = { id: string; label: string; low: number; high: number; mid: number; color: string; dash: string };
 
 /** Session-over-session change for one metric. Hollow points = quick-demo protocol (not comparable). */
 export function TrendChart({ data, metricLabel, unit, bands = [] }: { data: TrendPoint[]; metricLabel: string; unit: string; bands?: TrendBand[] }) {
@@ -197,14 +197,23 @@ export function TrendChart({ data, metricLabel, unit, bands = [] }: { data: Tren
         {bands.map((b) => (
           <ReferenceArea key={`${b.id}-range`} y1={b.low} y2={b.high} fill={b.color} fillOpacity={0.12} ifOverflow="extendDomain" />
         ))}
-        {bands.map((b) => (
+        {bands.map((b, i) => (
           <ReferenceLine
             key={`${b.id}-mid`}
             y={b.mid}
             stroke={b.color}
-            strokeDasharray="5 4"
+            strokeWidth={1.5}
+            strokeDasharray={b.dash}
             ifOverflow="extendDomain"
-            label={{ value: b.label, position: "insideTopLeft", fontSize: 10, fill: b.color }}
+            // Labels are staggered along the line so close-together means stay readable.
+            label={(props: unknown) => {
+              const { viewBox } = props as { viewBox: { x: number; y: number; width: number } };
+              return (
+                <text x={viewBox.x + viewBox.width * (0.02 + i * 0.245)} y={viewBox.y - 4} fontSize={10} fontWeight={600} fill={b.color}>
+                  {b.label}
+                </text>
+              );
+            }}
           />
         ))}
         <Tooltip {...tooltipStyle} formatter={(v: number) => [fmt(v), metricLabel]} />
